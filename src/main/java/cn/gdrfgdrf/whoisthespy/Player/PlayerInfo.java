@@ -1,6 +1,5 @@
 package cn.gdrfgdrf.whoisthespy.Player;
 
-import cn.gdrfgdrf.whoisthespy.Game.Character;
 import cn.gdrfgdrf.whoisthespy.Game.Game;
 import cn.gdrfgdrf.whoisthespy.WhoIsTheSpy;
 import lombok.Getter;

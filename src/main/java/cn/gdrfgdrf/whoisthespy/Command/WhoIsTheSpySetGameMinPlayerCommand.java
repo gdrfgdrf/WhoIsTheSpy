@@ -13,7 +13,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WhoIsTheSpySetGameMinPlayerCommand extends SubCommand {
-
     public static final String SYNTAX;
 
     static {

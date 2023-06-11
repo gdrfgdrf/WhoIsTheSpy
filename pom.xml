@@ -219,16 +219,6 @@
               <shadedPattern>com.gdrfgdrf.whoisthespy.anvilgui</shadedPattern>
             </relocation>
           </relocations>
-
-          <!--          <filters>-->
-          <!--            <filter>-->
-          <!--              <artifact>*:*</artifact>-->
-          <!--              <excludeDefaults>false</excludeDefaults>-->
-          <!--              <includes>-->
-          <!--                <include>com.gdrfgdrf.whoisthespy.anvilgui</include>-->
-          <!--              </includes>-->
-          <!--            </filter>-->
-          <!--          </filters>-->
         </configuration>
         <executions>
           <execution>

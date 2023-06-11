@@ -33,11 +33,11 @@ public class SignList implements Iterable<Location> {
     private static Location stringToLocation(String string) {
         String[] split = string.split(";");
         World world = Bukkit.getWorld(split[0]);
-        double x = Double.valueOf(split[1]);
-        double y = Double.valueOf(split[2]);
-        double z = Double.valueOf(split[3]);
-        float yaw = Float.valueOf(split[4]);
-        float pitch = Float.valueOf(split[5]);
+        double x = Double.parseDouble(split[1]);
+        double y = Double.parseDouble(split[2]);
+        double z = Double.parseDouble(split[3]);
+        float yaw = Float.parseFloat(split[4]);
+        float pitch = Float.parseFloat(split[5]);
         return new Location(world, x, y, z, yaw, pitch);
     }
 

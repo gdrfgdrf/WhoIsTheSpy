@@ -2,6 +2,7 @@ package cn.gdrfgdrf.whoisthespy.Command;
 
 import cn.gdrfgdrf.whoisthespy.Locale.WhoIsTheSpyLocale;
 import cn.gdrfgdrf.whoisthespy.WhoIsTheSpy;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -60,7 +61,7 @@ public class WhoIsTheSpyCommand implements TabExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, String label, String @NonNull [] args) {
         if (!label.equalsIgnoreCase("whoisthespy") && !label.equalsIgnoreCase("who")) {
             return true;
         }
@@ -92,7 +93,7 @@ public class WhoIsTheSpyCommand implements TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, String[] args) {
         List<String> result = new LinkedList<>();
 
         if (args.length == 1) {

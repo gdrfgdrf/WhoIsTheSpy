@@ -13,11 +13,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WhoIsTheSpySetGameCountdownCommand extends SubCommand {
-
     public static final String SYNTAX;
 
     static {
-        SYNTAX = "/who setMaxPlayer %START%%NAME%%END% %START%%INTEGER%%END%"
+        SYNTAX = "/who setCountdown %START%%NAME%%END% %START%%INTEGER%%END%"
                 .replace("%START%", WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_START.toString())
                 .replace("%END%", WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_END.toString())
                 .replace("%NAME%", WhoIsTheSpyLocale.NAME.toString())

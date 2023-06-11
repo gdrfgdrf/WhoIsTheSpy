@@ -102,12 +102,6 @@ public class Util {
         player.sendTitle(title, subtitle, 10, 70, 20);
     }
 
-    public static void sendTitleForPlayerList(List<Player> list, String title, String subtitle) {
-        for (Player player : list) {
-            sendTitle(player, title, subtitle);
-        }
-    }
-
     public static void sendTitleForPlayerInfoList(List<PlayerInfo> list, String title, String subtitle) {
         for (PlayerInfo player : list) {
             sendTitle(player.getPlayer(), title, subtitle);
@@ -184,9 +178,7 @@ public class Util {
             String sign = getURLContent("https://sessionserver.mojang.com/session/minecraft/profile/" + uid);
             if (sign != null) {
                 obj = (JsonObject) JsonParser.parseString(sign);
-                String value = obj.getAsJsonArray("properties").get(0).getAsJsonObject().get("value").getAsString();
-
-                return value;
+                return obj.getAsJsonArray("properties").get(0).getAsJsonObject().get("value").getAsString();
             } else {
                 return null;
             }

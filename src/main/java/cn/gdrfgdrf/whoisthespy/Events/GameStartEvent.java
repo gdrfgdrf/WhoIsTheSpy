@@ -18,7 +18,7 @@ public class GameStartEvent extends Event {
     private Game game;
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return handlerList;
     }
 

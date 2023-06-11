@@ -14,18 +14,17 @@ public class DisplayScoreboard {
         if (WhoIsTheSpyLocale.SCOREBOARD_WAITING.getValues().length < 2)
             return;
 
-        Scoreboard playerboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective objective = playerboard.registerNewObjective("Score", "dummy");
+        Scoreboard playerBoard = Bukkit.getScoreboardManager().getNewScoreboard();
+        Objective objective = playerBoard.registerNewObjective("Score", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         String text_value = WhoIsTheSpyLocale.SCOREBOARD_WAITING.getValue()
-                .replace("%CURRENT_PLAYER%", game.getPlayersInGame().size() + "")
-                .replace("%MAX_PLAYER%", game.getMaxPlayer() + "")
+                .replace("%CURRENT_PLAYER%", String.valueOf(game.getPlayersInGame().size()))
+                .replace("%MAX_PLAYER%", String.valueOf(game.getMaxPlayer()))
                 .replace("%GAME%", game.getName());
-        ;
 
         if (game.getPlayersInGame().size() >= game.getMinPlayer()) {
-            text_value = text_value.replace("%TIME%", timeLeft + "");
+            text_value = text_value.replace("%TIME%", String.valueOf(timeLeft));
         } else {
             text_value = text_value.replace("%TIME%", WhoIsTheSpyLocale.WAITING_FOR_PLAYER.toString());
         }
@@ -36,12 +35,12 @@ public class DisplayScoreboard {
 
         for (int i = 0; i < WhoIsTheSpyLocale.SCOREBOARD_WAITING.getValues().length - 1; i++) {
             String text = WhoIsTheSpyLocale.SCOREBOARD_WAITING.getValue(i + 1)
-                    .replace("%CURRENT_PLAYER%", activePlayers + "")
-                    .replace("%MAX_PLAYER%", game.getMaxPlayer() + "")
+                    .replace("%CURRENT_PLAYER%", String.valueOf(activePlayers))
+                    .replace("%MAX_PLAYER%", String.valueOf(game.getMaxPlayer()))
                     .replace("%GAME%", game.getName());
 
             if (game.getPlayersInGame().size() >= game.getMinPlayer()) {
-                text = text.replace("%TIME%", timeLeft + "");
+                text = text.replace("%TIME%", String.valueOf(timeLeft));
             } else {
                 text = text.replace("%TIME%", WhoIsTheSpyLocale.WAITING_FOR_PLAYER.toString());
             }
@@ -51,7 +50,7 @@ public class DisplayScoreboard {
         }
 
         for (PlayerInfo playerInfo : game.getPlayersInGame()) {
-            playerInfo.getPlayer().setScoreboard(playerboard);
+            playerInfo.getPlayer().setScoreboard(playerBoard);
         }
     }
 
@@ -116,7 +115,6 @@ public class DisplayScoreboard {
 
     private void checkQuestionAndBeQuestioned(Game game, boolean isQuestionNull, boolean isBeQuestionedNull, Objective good_objective, String good_text_value) {
         good_text_value = getString(game, isQuestionNull, isBeQuestionedNull, good_text_value);
-
         good_objective.setDisplayName(good_text_value);
     }
 
@@ -132,6 +130,7 @@ public class DisplayScoreboard {
         } else {
             good_text_value = good_text_value.replace("%BE_QUESTIONED%", WhoIsTheSpyLocale.NULL.toString());
         }
+
         return good_text_value;
     }
 }

@@ -33,7 +33,7 @@ public class PlayerLeaveGameEvent extends Event implements Cancellable {
     private PlayerInfo playerInfo;
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return handlerList;
     }
 }

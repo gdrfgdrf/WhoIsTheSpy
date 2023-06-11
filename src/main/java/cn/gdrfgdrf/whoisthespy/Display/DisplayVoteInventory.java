@@ -18,7 +18,7 @@ import static cn.gdrfgdrf.whoisthespy.Locale.WhoIsTheSpyLocale.*;
 
 public class DisplayVoteInventory {
 
-    private HashMap<PlayerInfo, Integer> playerInfoCountdown = new HashMap<>();
+    private final HashMap<PlayerInfo, Integer> playerInfoCountdown = new HashMap<>();
 
     public void setCountdown(Game game) {
         for (PlayerInfo playerInfo : game.getInitVotePlayers()) {

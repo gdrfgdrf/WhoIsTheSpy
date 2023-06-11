@@ -14,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WhoIsTheSpyLeaveGameCommand extends SubCommand {
-
     public static final String SYNTAX = "/who leave";
 
     @Getter

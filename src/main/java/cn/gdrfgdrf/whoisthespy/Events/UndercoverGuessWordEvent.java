@@ -27,7 +27,7 @@ public class UndercoverGuessWordEvent extends Event {
     private String guess;
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return handlerList;
     }
 

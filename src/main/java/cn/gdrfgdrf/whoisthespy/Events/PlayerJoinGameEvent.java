@@ -3,6 +3,7 @@ package cn.gdrfgdrf.whoisthespy.Events;
 import cn.gdrfgdrf.whoisthespy.Game.Game;
 import cn.gdrfgdrf.whoisthespy.Player.PlayerInfo;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.bukkit.entity.Player;
@@ -39,7 +40,7 @@ public class PlayerJoinGameEvent extends Event implements Cancellable {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return handlerList;
     }
 }

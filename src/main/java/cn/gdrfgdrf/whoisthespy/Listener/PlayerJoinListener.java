@@ -28,7 +28,7 @@ public class PlayerJoinListener implements Listener {
 
         PlayerInfo playerInfo = PlayerInfo.getFromPlayer(player);
         if (playerInfo == null) {
-            whoIsTheSpy.getPlayers().add((playerInfo = new PlayerInfo(player)));
+            whoIsTheSpy.getPlayers().add(new PlayerInfo(player));
         } else {
             playerInfo.setPlayerState(PlayerState.DEFAULT);
             playerInfo.setCurrentGame(null);

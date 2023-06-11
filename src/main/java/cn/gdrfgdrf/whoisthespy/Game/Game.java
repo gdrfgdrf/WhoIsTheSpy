@@ -42,7 +42,7 @@ public class Game {
     public static final int ANSWER_DURATION = 15;
     public static final int VOTE_DURATION = 15;
 
-    private WhoIsTheSpy whoIsTheSpy;
+    private final WhoIsTheSpy whoIsTheSpy;
 
     @Getter
     private GameDataSet data;
@@ -177,7 +177,7 @@ public class Game {
                             Bukkit.getPluginManager().callEvent(undercoverGuessWordEvent);
                         }
 
-                        return Arrays.asList(AnvilGUI.ResponseAction.close());
+                        return Collections.singletonList(AnvilGUI.ResponseAction.close());
                     } else {
                         return null;
                     }
@@ -386,10 +386,6 @@ public class Game {
         return data.getVoteDuration();
     }
 
-    public void setVoteDuration(int voteCountdown) {
-        data.setVoteDuration(voteCountdown);
-    }
-
     public SignList getSigns() {
         return data.signs;
     }
@@ -402,7 +398,7 @@ public class Game {
         data.setEnabled(enabled);
     }
 
-    public PlayerJoinGameEvent addPlayer(Player player) {
+    public void addPlayer(Player player) {
         PlayerInfo playerInfo = PlayerInfo.getFromPlayer(player);
 
         if (playerInfo == null) {
@@ -416,21 +412,16 @@ public class Game {
 
         PlayerJoinGameEvent event = new PlayerJoinGameEvent(this, player, playerInfo);
         Bukkit.getPluginManager().callEvent(event);
-
-        return event;
     }
 
-    public PlayerLeaveGameEvent callPlayerLeaveGameEvent(PlayerInfo playerInfo) {
+    public void callPlayerLeaveGameEvent(PlayerInfo playerInfo) {
         PlayerLeaveGameEvent event = new PlayerLeaveGameEvent(this, playerInfo.getPlayer(), playerInfo);
         Bukkit.getPluginManager().callEvent(event);
-
-        return event;
     }
 
-    public PlayerLeaveGameEvent removePlayer(PlayerInfo playerInfo) {
+    public void removePlayer(PlayerInfo playerInfo) {
         playersInGame.remove(playerInfo);
-
-        return callPlayerLeaveGameEvent(playerInfo);
+        callPlayerLeaveGameEvent(playerInfo);
     }
 
     public void broadcast(LocaleString prefix, LocaleString message, String... placeholder) {
@@ -545,7 +536,7 @@ public class Game {
                             Bukkit.getPluginManager().callEvent(undercoverGuessWordEvent);
                         }
 
-                        return Arrays.asList(AnvilGUI.ResponseAction.close());
+                        return Collections.singletonList(AnvilGUI.ResponseAction.close());
                     } else {
                         return null;
                     }

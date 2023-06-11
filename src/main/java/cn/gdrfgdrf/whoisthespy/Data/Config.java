@@ -15,8 +15,10 @@ import java.nio.charset.StandardCharsets;
 public class Config {
     @Getter
     private final boolean utf8;
+
     @Getter
     private File file;
+
     @Getter
     private FileConfiguration configuration;
 
@@ -43,7 +45,7 @@ public class Config {
 
         if (utf8) {
             try {
-                String s = Files.toString(file, StandardCharsets.UTF_8);
+                String s = Files.asCharSource(file, StandardCharsets.UTF_8).read();
                 configuration = new YamlConfiguration();
                 configuration.loadFromString(s);
             } catch (IOException | InvalidConfigurationException e) {

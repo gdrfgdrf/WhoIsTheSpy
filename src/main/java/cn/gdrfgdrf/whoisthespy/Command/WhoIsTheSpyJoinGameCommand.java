@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WhoIsTheSpyJoinGameCommand extends SubCommand {
-
     public static final String SYNTAX;
 
     static {

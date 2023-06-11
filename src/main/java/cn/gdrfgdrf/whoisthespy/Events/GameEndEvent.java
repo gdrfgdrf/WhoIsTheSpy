@@ -31,7 +31,7 @@ public class GameEndEvent extends Event {
     private boolean calculateVote;
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return handlerList;
     }
 

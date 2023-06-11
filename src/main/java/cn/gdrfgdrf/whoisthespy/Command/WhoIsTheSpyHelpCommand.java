@@ -12,8 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WhoIsTheSpyHelpCommand extends SubCommand {
-
-    public static String SYNTAX = "/who help";
+    public static final String SYNTAX = "/who help";
 
     @Getter
     private final LocaleString description = WhoIsTheSpyLocale.COMMAND_HELP;

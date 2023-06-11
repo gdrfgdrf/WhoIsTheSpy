@@ -31,8 +31,9 @@ public class WhoIsTheSpyAdminHelpCommand extends SubCommand {
         sender.sendMessage(header);
 
         for (SubCommand command : WhoIsTheSpyCommand.commands) {
-            if (!command.getPermission().startsWith(WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX))
+            if (!command.getPermission().startsWith(WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX)) {
                 continue;
+            }
 
             sender.sendMessage(template.replace("%SYNTAX%", command.getSyntax()).replace("%DESCRIPTION%", command.getDescription().toString()));
         }

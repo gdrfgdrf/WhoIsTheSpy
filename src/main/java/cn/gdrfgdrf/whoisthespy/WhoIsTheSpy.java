@@ -13,7 +13,6 @@ import cn.gdrfgdrf.whoisthespy.Utils.de.pauhull.utils.file.FileUtils;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -209,15 +208,5 @@ public class WhoIsTheSpy {
 
     private List<String> loadAllWords() {
         return config.getConfiguration().getStringList("Word");
-    }
-
-    public PlayerInfo getPlayerInfo(Player player) {
-        for (PlayerInfo playerInfo : players) {
-            if (playerInfo.getPlayer() == player) {
-                return playerInfo;
-            }
-        }
-
-        return null;
     }
 }

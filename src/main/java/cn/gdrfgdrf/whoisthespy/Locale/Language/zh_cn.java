@@ -40,8 +40,8 @@ public class zh_cn extends Language {
     public static final LocaleString SUCCESS_SET_GAME_VOTE_DURATION = new LocaleString(SUCCESS, "游戏 %GAME% 的投票时长已被设置为 %TIME% 秒");
     public static final LocaleString SUCCESS_SWITCH_GAME_STATUS = new LocaleString(SUCCESS, "游戏 %GAME% 的状态已切换为：%STATUS%");
     public static final LocaleString SUCCESS_FORCE_STOP_GAME = new LocaleString(SUCCESS, "游戏 %GAME% 已被强制停止");
-    public static final LocaleString SUCCESS_ADD_SIGN = new LocaleString(SUCCESS, "成功为游戏 %GAME% 添加了一个加入牌子");
-    public static final LocaleString SUCCESS_REMOVE_SIGN = new LocaleString(SUCCESS, "已移除游戏 %GAME% 的一个加入牌子");
+    public static final LocaleString SUCCESS_ADD_SIGN = new LocaleString(SUCCESS, "成功为游戏 %GAME% 添加了一个加入告示牌");
+    public static final LocaleString SUCCESS_REMOVE_SIGN = new LocaleString(SUCCESS, "已移除游戏 %GAME% 的一个加入告示牌");
     public static final LocaleString SUCCESS_RELOAD = new LocaleString(SUCCESS, "重载成功");
 
     public static final LocaleString ERROR_CREATE_GAME = new LocaleString(ERROR, "游戏 %GAME% 已经存在");

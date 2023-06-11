@@ -12,11 +12,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WhoIsTheSpyForceStopGameCommand extends SubCommand {
-
-    public static final String SYNYAX;
+    public static final String SYNTAX;
 
     static {
-        SYNYAX = "/who stop %START%%NAME%%END%"
+        SYNTAX = "/who stop %START%%NAME%%END%"
                 .replace("%START%", WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_START.toString())
                 .replace("%END%", WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_END.toString())
                 .replace("%NAME%", WhoIsTheSpyLocale.NAME.toString());
@@ -68,6 +67,6 @@ public class WhoIsTheSpyForceStopGameCommand extends SubCommand {
 
     @Override
     public String getSyntax() {
-        return SYNYAX;
+        return SYNTAX;
     }
 }

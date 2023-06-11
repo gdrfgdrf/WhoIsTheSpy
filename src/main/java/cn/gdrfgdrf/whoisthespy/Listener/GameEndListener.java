@@ -8,10 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,7 +58,7 @@ public class GameEndListener implements Listener {
         HashMap<PlayerInfo, PlayerInfo> voteMap = game.getVOTER_AND_BE_VOTED();
         HashMap<String, PlayerInfo> stringAndPlayerInfo = new HashMap<>();
         HashMap<String, Integer> voteCountMap = new HashMap<>();
-        LinkedList<String> beVotedList = new LinkedList<>();
+        List<String> beVotedList = new LinkedList<>();
 
         for (Map.Entry<PlayerInfo, PlayerInfo> map : voteMap.entrySet()) {
             beVotedList.add(map.getValue().getPlayer().getUniqueId().toString());

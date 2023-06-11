@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WhoIsTheSpyDeleteGameCommand extends SubCommand {
-
     public static final String SYNTAX;
 
     static {

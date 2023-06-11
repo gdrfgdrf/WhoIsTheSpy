@@ -13,8 +13,8 @@ import static cn.gdrfgdrf.whoisthespy.Locale.WhoIsTheSpyLocale.*;
 public class WaitingPhase implements Runnable {
 
     private int countdown;
-    private WhoIsTheSpy whoIsTheSpy;
-    private Game game;
+    private final WhoIsTheSpy whoIsTheSpy;
+    private final Game game;
 
     public WaitingPhase(WhoIsTheSpy whoIsTheSpy, Game game) {
         this.whoIsTheSpy = whoIsTheSpy;
