@@ -10,10 +10,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class InventorySet {
-
     private ChestGui chestGui;
     private OutlinePane outlinePane;
     private PaginatedPane paginatedPane;
     private StaticPane staticPane;
-
 }
