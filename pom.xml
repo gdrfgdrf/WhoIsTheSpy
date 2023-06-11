@@ -4,9 +4,9 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.gdrfgdrf.whoisthespy_reloaded</groupId>
-  <artifactId>WhoIsTheSpy_reloaded</artifactId>
-  <version>1.0.1</version>
+  <groupId>cn.gdrfgdrf</groupId>
+  <artifactId>WhoIsTheSpy</artifactId>
+  <version>1.0.0</version>
 
   <packaging>jar</packaging>
   <properties>
@@ -53,31 +53,6 @@
   </repositories>
 
   <dependencies>
-    <!--    <dependency>-->
-    <!--      <groupId>org.spigotmc</groupId>-->
-    <!--      <artifactId>spigot-api</artifactId>-->
-    <!--      <version>1.19.4-R0.1-SNAPSHOT</version>-->
-    <!--      <scope>provided</scope>-->
-    <!--      <exclusions>-->
-    <!--        <exclusion>-->
-    <!--          <groupId>com.mojang</groupId>-->
-    <!--          <artifactId>authlib</artifactId>-->
-    <!--        </exclusion>-->
-    <!--        <exclusion>-->
-    <!--          <groupId>com.mojang</groupId>-->
-    <!--          <artifactId>brigadier</artifactId>-->
-    <!--        </exclusion>-->
-    <!--        <exclusion>-->
-    <!--          <groupId>com.mojang</groupId>-->
-    <!--          <artifactId>datafixerupper</artifactId>-->
-    <!--        </exclusion>-->
-    <!--        <exclusion>-->
-    <!--          <groupId>com.mojang</groupId>-->
-    <!--          <artifactId>logging</artifactId>-->
-    <!--        </exclusion>-->
-    <!--      </exclusions>-->
-    <!--    </dependency>-->
-
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot</artifactId>
