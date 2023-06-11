@@ -62,10 +62,10 @@ The code references BlockParty: https://github.com/lmk02/BlockParty
 
 <br><h1>dependencies</h1></br>
 
-[Anvil GUI]("https://github.com/WesJD/AnvilGUI")
+[Anvil GUI](https://github.com/WesJD/AnvilGUI)
 
-[IF]("https://github.com/stefvanschie/IF")
+[IF](https://github.com/stefvanschie/IF)
 
-[Pauhull-Utils]("https://github.com/pauhull/pauhull-utils")
+[Pauhull-Utils](https://github.com/pauhull/pauhull-utils)
 
 <h2>Only Chinese translation by default</h2>

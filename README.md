@@ -1,6 +1,6 @@
 <h1>WhoIsTheSpy —— 谁是卧底</h1>
 
-[For English]("https://github.com/gdrfgdrf/WhoIsTheSpy/blob/master/README_EN.md")
+[For English](https://github.com/gdrfgdrf/WhoIsTheSpy/blob/master/README_EN.md)
 
 灵感来源于B站小潮院长视频：https://www.bilibili.com/video/BV1qS4y1q7Ld
 
@@ -62,11 +62,11 @@
 
 <br><h1>依赖</h1></br>
 
-[Anvil GUI]("https://github.com/WesJD/AnvilGUI")
+[Anvil GUI](https://github.com/WesJD/AnvilGUI)
 
-[IF]("https://github.com/stefvanschie/IF")
+[IF](https://github.com/stefvanschie/IF)
 
-[Pauhull-Utils]("https://github.com/pauhull/pauhull-utils")
+[Pauhull-Utils](https://github.com/pauhull/pauhull-utils)
 
 <h2>默认只有中文翻译</h2>
 
