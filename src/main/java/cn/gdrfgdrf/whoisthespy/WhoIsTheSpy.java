@@ -157,6 +157,7 @@ public class WhoIsTheSpy {
         new InventoryCloseListener(this);
         new InventoryClickListener(this);
         new UndercoverGuessWordListener(this);
+        new PlayerDropItemListener(this);
 
         new WhoIsTheSpyCommand(this);
     }
