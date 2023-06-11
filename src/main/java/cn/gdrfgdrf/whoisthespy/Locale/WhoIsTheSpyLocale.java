@@ -8,7 +8,6 @@ import cn.gdrfgdrf.whoisthespy.WhoIsTheSpy;
 import java.io.File;
 
 public class WhoIsTheSpyLocale extends Locale {
-
     public static LocaleString PREFIX;
     public static LocaleString ENABLED;
     public static LocaleString DISABLED;
