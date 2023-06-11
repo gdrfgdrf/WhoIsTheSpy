@@ -1,5 +1,6 @@
 <h1>WhoIsTheSpy —— 谁是卧底</h1>
-[For Chinese](https://github.com/gdrfgdrf/WhoIsTheSpy/README.md)
+
+[For Chinese](https://github.com/gdrfgdrf/WhoIsTheSpy/blob/master/README.md)
 
 Inspired by the video of XiaoChaoYuanZhang: https://www.bilibili.com/video/BV1qS4y1q7Ld
 

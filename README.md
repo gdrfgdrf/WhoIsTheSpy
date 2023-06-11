@@ -1,6 +1,6 @@
 <h1>WhoIsTheSpy —— 谁是卧底</h1>
 
-[For English]("https://github.com/gdrfgdrf/WhoIsTheSpy/README_EN.md")
+[For English]("https://github.com/gdrfgdrf/WhoIsTheSpy/blob/master/README_EN.md")
 
 灵感来源于B站小潮院长视频：https://www.bilibili.com/video/BV1qS4y1q7Ld
 
