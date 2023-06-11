@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="WhoIsTheSpy_reloaded:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/WhoIsTheSpy_reloaded_jar</output-path>
+    <root id="archive" name="WhoIsTheSpy_reloaded.jar">
+      <element id="module-output" name="WhoIsTheSpy_reloaded" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/stefvanschie/inventoryframework/IF/0.10.9/IF-0.10.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bstats/bstats-bukkit/3.0.2/bstats-bukkit-3.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bstats/bstats-base/3.0.2/bstats-base-3.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-io/commons-io/2.7/commons-io-2.7.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

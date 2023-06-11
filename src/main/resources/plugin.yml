@@ -1,0 +1,11 @@
+main: cn.gdrfgdrf.whoisthespy.Plugin
+name: WhoIsTheSpy
+version: 1.0
+api-version: 1.16
+
+commands:
+  whoisthespy:
+    aliases:
+      - who
+    description: who main command
+    usage: /who

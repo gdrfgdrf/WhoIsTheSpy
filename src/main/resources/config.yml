@@ -1,0 +1,104 @@
+Locale: zh_cn.yml
+
+Sign:
+  UpdateMillis: 500
+
+Item:
+  LEAVE_GAME: RED_BED
+  NAVIGATION_BACKGROUND: BLACK_STAINED_GLASS_PANE
+  NAVIGATION_PREVIOUS: RED_WOOL
+  NAVIGATION_COUNTDOWN: NETHER_STAR
+  NAVIGATION_COUNTDOWN_VOTE: NETHER_STAR
+  NAVIGATION_NEXT: GREEN_WOOL
+  END_ANSWER: REDSTONE_BLOCK
+  INIT_VOTE: ANVIL
+  INIT_GUESS_WORD: ANVIL
+  GUESS_WORD_GUI_PLACEHOLDER: PAPER
+
+ItemSlot:
+  LEAVE_GAME: 8
+  END_ANSWER: 4
+  INIT_VOTE: 8
+  INIT_GUESS_WORD: 8
+
+GameChatFormat: "&8[&7%GAME%&8] &7%PLAYER% &8> &r%MESSAGE%"
+
+Word:
+  - 飞机
+  - 银行
+  - 电影院
+  - 汽车
+  - 电脑
+  - 潜艇
+  - 海豚
+  - 海带
+  - 海洋
+  - 沙丁鱼
+  - 插件
+  - 玩家
+  - 空调
+  - 裁判
+  - 我是警长
+  - 警长
+  - CPU
+  - GPU
+  - APU
+  - 爸爸
+  - 妈妈
+  - 爷爷
+  - 奶奶
+  - 叔叔
+  - 阿姨
+  - 表哥
+  - 表弟
+  - 表姐
+  - 表妹
+  - 姑姑
+  - 婶婶
+  - 外甥
+  - 舅舅
+  - 哥哥
+  - 姐姐
+  - 妹妹
+  - 小姨
+  - 大姨
+  - 七大姑八大姨
+  - 中国
+  - 日本
+  - 俄罗斯
+  - 法国
+  - 美国
+  - 英国
+  - 阿富汗
+  - 叙利亚
+  - 马来西亚
+  - 智利
+  - 蒙古
+  - 蒙古海军
+  - 墨西哥
+  - 美国二号
+  - 加拿大
+  - 英格兰
+  - 法兰西共和国
+  - 大不列颠及北爱尔兰联合王国
+  - 爱尔兰
+  - 冰岛
+  - 挪威
+  - 瑞典
+  - 瑞士
+  - 芬兰
+  - 德国
+  - 西班牙
+  - 泰国
+  - 波兰
+  - 奥匈帝国
+  - 埃及
+  - 荷兰
+  - 比利时
+  - 卢森堡
+  - 奥地利
+  - 意大利
+  - 梵蒂冈
+  - 捷克
+  - 丹麦
+  - 葡萄牙
