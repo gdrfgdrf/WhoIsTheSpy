@@ -21,7 +21,7 @@ public enum ItemType {
     END_ANSWER(ITEM_END_ANSWER.toString(), "Item.END_ANSWER", Material.REDSTONE_BLOCK, ITEM_END_ANSWER_LORE.getValues()),
     INIT_VOTE(ITEM_INIT_VOTE.toString(), "Item.INIT_VOTE", Material.ANVIL, ITEM_INIT_VOTE_LORE.getValues()),
     INIT_GUESS_WORD(ITEM_INIT_GUESS_WORD.toString(), "Item.INIT_GUESS_WORD", Material.ANVIL, ITEM_INIT_GUESS_WORD_LORE.getValues()),
-    GUESS_WORD_GUI_PLACEHOLDER(ITEM_GUESS_WORD_GUI_PLACEHOLDER.toString(), "Item.GUESS_WORD_GUI_PLACEHOLDER", Material.PAPER, ITEM_GUESS_WORD_GUI_PLACEHOLDER_LORE.getValues());
+    GUESS_WORD_GUI_PLACEHOLDER("", "Item.GUESS_WORD_GUI_PLACEHOLDER", Material.PAPER, "");
 
     public static final String errorMessage = "The value of %PATH% is not an enumeration of Material.class, the default Material.class enumeration of %DEFAULT_MATERIAL% is used";
     private final String name;

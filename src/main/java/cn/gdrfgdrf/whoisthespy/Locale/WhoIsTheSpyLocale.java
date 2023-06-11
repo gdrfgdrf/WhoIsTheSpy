@@ -172,8 +172,6 @@ public class WhoIsTheSpyLocale extends Locale {
     public static LocaleString ITEM_INIT_VOTE_LORE;
     public static LocaleString ITEM_INIT_GUESS_WORD;
     public static LocaleString ITEM_INIT_GUESS_WORD_LORE;
-    public static LocaleString ITEM_GUESS_WORD_GUI_PLACEHOLDER;
-    public static LocaleString ITEM_GUESS_WORD_GUI_PLACEHOLDER_LORE;
 
     public static LocaleString INVENTORY_QUESTIONER_SELECT_BE_QUESTIONED_TITLE;
     public static LocaleString INVENTORY_SELECT_BE_VOTE_TITLE;

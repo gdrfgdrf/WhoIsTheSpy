@@ -198,8 +198,6 @@ public class zh_cn extends Language {
     public static final LocaleString ITEM_INIT_VOTE_LORE = new LocaleString(ITEMS, "&e发起投票后请选择被投票玩家，完成投票之前将无法关闭投票界面");
     public static final LocaleString ITEM_INIT_GUESS_WORD = new LocaleString(ITEMS, "&4猜词（右键点击）");
     public static final LocaleString ITEM_INIT_GUESS_WORD_LORE = new LocaleString(ITEMS, "&e点击后会出现铁砧界面，输入你猜的词语并点击右方的物品");
-    public static final LocaleString ITEM_GUESS_WORD_GUI_PLACEHOLDER = new LocaleString(ITEMS, "");
-    public static final LocaleString ITEM_GUESS_WORD_GUI_PLACEHOLDER_LORE = new LocaleString(ITEMS, "");
 
     public static final LocaleString INVENTORY_QUESTIONER_SELECT_BE_QUESTIONED_TITLE = new LocaleString(INFO, "请选择被提问者");
     public static final LocaleString INVENTORY_SELECT_BE_VOTE_TITLE = new LocaleString(INFO, "请选择你要投票的玩家");
