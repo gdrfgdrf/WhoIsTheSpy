@@ -6,7 +6,7 @@
 
   <groupId>com.gdrfgdrf.whoisthespy_reloaded</groupId>
   <artifactId>WhoIsTheSpy_reloaded</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.1</version>
 
   <packaging>jar</packaging>
   <properties>

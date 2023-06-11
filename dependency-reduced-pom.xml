@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.gdrfgdrf.whoisthespy_reloaded</groupId>
   <artifactId>WhoIsTheSpy_reloaded</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.1</version>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <resources>
@@ -42,7 +42,6 @@
               <shadedPattern>com.gdrfgdrf.whoisthespy.anvilgui</shadedPattern>
             </relocation>
           </relocations>
-          <outputFile>G:\Server\test_server\plugins\WhoIsTheSpy.jar</outputFile>
         </configuration>
       </plugin>
       <plugin>
