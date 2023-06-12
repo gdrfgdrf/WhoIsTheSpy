@@ -20,7 +20,7 @@ public enum ItemType {
     NAVIGATION_NEXT(ITEM_NAVIGATION_NEXT.toString(), "Item.NAVIGATION_NEXT", Material.GREEN_WOOL, ITEM_NAVIGATION_NEXT_LORE.getValues()),
     END_ANSWER(ITEM_END_ANSWER.toString(), "Item.END_ANSWER", Material.REDSTONE_BLOCK, ITEM_END_ANSWER_LORE.getValues()),
     INIT_VOTE(ITEM_INIT_VOTE.toString(), "Item.INIT_VOTE", Material.ANVIL, ITEM_INIT_VOTE_LORE.getValues()),
-    INIT_GUESS_WORD(ITEM_INIT_GUESS_WORD.toString(), "Item.INIT_GUESS_WORD", Material.ANVIL, ITEM_INIT_GUESS_WORD_LORE.getValues()),
+    INIT_GUESS_WORD(ITEM_INIT_GUESS_WORD.toString(), null, Material.ANVIL, ITEM_INIT_GUESS_WORD_LORE.getValues()),
     GUESS_WORD_GUI_PLACEHOLDER("", "Item.GUESS_WORD_GUI_PLACEHOLDER", Material.PAPER, "");
 
     public static final String errorMessage = "The value of %PATH% is not an enumeration of Material.class, the default Material.class enumeration of %DEFAULT_MATERIAL% is used";
@@ -75,6 +75,11 @@ public enum ItemType {
     }
 
     public void reload() {
+        if (path == null) {
+            type = defaultMaterial;
+            return;
+        }
+
         if (WhoIsTheSpy.getInstance().getConfig().getConfiguration().isString(path)) {
             try {
                 type = Material.valueOf(WhoIsTheSpy.getInstance().getConfig().getConfiguration().getString(path));

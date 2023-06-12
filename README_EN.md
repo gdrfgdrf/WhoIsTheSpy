@@ -29,8 +29,8 @@ The code references BlockParty: https://github.com/lmk02/BlockParty
 
 | Basic Permission  | Default User |
 |-------------------|-------------:|
-| whoisthespy.admin |        Admin |
 | whoisthespy.user  |         User |
+| whoisthespy.admin |        Admin |
 
 | Permission                                      | Default User |              Command               |                 Operation                 |
 |-------------------------------------------------|:------------:|:----------------------------------:|:-----------------------------------------:|
@@ -59,6 +59,40 @@ The code references BlockParty: https://github.com/lmk02/BlockParty
 <br><h2>Join Sign Style</h2></br>
 
 ![english_join_sign.png](Picture%2Fenglish_join_sign.png)
+
+```yaml
+Locale: zh_cn.yml
+#Set language, The file needs to be located under Locale/
+
+Sign:
+  UpdateMillis: 500
+  #Join sign update frequency, default 500, in milliseconds
+
+Item: #Set what item to use, the set item must exist in the enumeration class Material, if not, will use the default Material
+  LEAVE_GAME: RED_BED #Leave the game
+  NAVIGATION_BACKGROUND: BLACK_STAINED_GLASS_PANE #Navigation bar background
+  NAVIGATION_PREVIOUS: RED_WOOL #Navigation bar - Previous page
+  NAVIGATION_COUNTDOWN: NETHER_STAR #Navigation bar - Select answerer countdown
+  NAVIGATION_COUNTDOWN_VOTE: NETHER_STAR #Navigation bar - Countdown to voting
+  NAVIGATION_NEXT: GREEN_WOOL #Navigation bar - Next page
+  END_ANSWER: REDSTONE_BLOCK #End answer
+  GUESS_WORD_GUI_PLACEHOLDER: PAPER #Guess word interface placeholder items
+
+ItemSlot: #Set which slot of the player's inventory the item is in
+  LEAVE_GAME: 8 #Leave the game
+  END_ANSWER: 4 #End answer
+  INIT_VOTE: 8 #Call a vote
+  INIT_GUESS_WORD: 8 #Guess the word
+
+#In-game chat format
+GameChatFormat: "&8[&7%GAME%&8] &7%PLAYER% &8> &r%MESSAGE%"
+
+#Set word
+Word:
+  - example1
+  - example2
+  - example3
+```
 
 <br><h1>dependencies</h1></br>
 
