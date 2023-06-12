@@ -60,6 +60,8 @@ The code references BlockParty: https://github.com/lmk02/BlockParty
 
 ![english_join_sign.png](Picture%2Fenglish_join_sign.png)
 
+<br><h2>Configuration file</h2></br>
+
 ```yaml
 Locale: zh_cn.yml
 #Set language, The file needs to be located under Locale/

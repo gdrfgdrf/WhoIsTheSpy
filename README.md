@@ -60,6 +60,8 @@
 
 ![chinese_join_sign.png](Picture%2Fchinese_join_sign.png)
 
+<br><h2>配置文件</h2></br>
+
 ```yaml
 Locale: zh_cn.yml
 #语言设置 文件需位于 Locale/ 下
