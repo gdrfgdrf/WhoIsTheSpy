@@ -13,14 +13,21 @@ import org.bukkit.entity.Player;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WhoIsTheSpyLeaveGameCommand extends SubCommand {
+public class LeaveGameCommand extends SubCommand {
     public static final String SYNTAX = "/who leave";
 
     @Getter
     private final LocaleString description = WhoIsTheSpyLocale.COMMAND_LEAVE_GAME;
 
-    public WhoIsTheSpyLeaveGameCommand(WhoIsTheSpy whoIsTheSpy) {
-        super(true, 1, 1, "leave", WhoIsTheSpyCommand.PERMISSION_USER_PREFIX + "leave", whoIsTheSpy);
+    public LeaveGameCommand(WhoIsTheSpy whoIsTheSpy) {
+        super(
+                true,
+                1,
+                1,
+                "leave",
+                WhoIsTheSpyCommand.PERMISSION_USER_PREFIX + "leave",
+                whoIsTheSpy
+        );
     }
 
     @Override
@@ -28,8 +35,13 @@ public class WhoIsTheSpyLeaveGameCommand extends SubCommand {
         Player player = (Player) sender;
         PlayerInfo playerInfo = PlayerInfo.getFromPlayer(player);
 
-        if (playerInfo == null || playerInfo.getCurrentGame() == null || playerInfo.getPlayerState() == PlayerState.DEFAULT) {
-            WhoIsTheSpyLocale.ERROR_NOT_IN_GAME.message(WhoIsTheSpyLocale.PREFIX, sender);
+        if (playerInfo == null ||
+                playerInfo.getCurrentGame() == null ||
+                playerInfo.getPlayerState() == PlayerState.DEFAULT) {
+            WhoIsTheSpyLocale.ERROR_NOT_IN_GAME.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    sender
+            );
             return;
         }
 

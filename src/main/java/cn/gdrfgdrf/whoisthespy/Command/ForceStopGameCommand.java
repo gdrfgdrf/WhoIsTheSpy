@@ -11,21 +11,31 @@ import org.bukkit.command.CommandSender;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WhoIsTheSpyForceStopGameCommand extends SubCommand {
+public class ForceStopGameCommand extends SubCommand {
     public static final String SYNTAX;
 
     static {
         SYNTAX = "/who stop %START%%NAME%%END%"
-                .replace("%START%", WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_START.toString())
-                .replace("%END%", WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_END.toString())
-                .replace("%NAME%", WhoIsTheSpyLocale.NAME.toString());
+                .replace("%START%",
+                        WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_START.toString())
+                .replace("%END%",
+                        WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_END.toString())
+                .replace("%NAME%",
+                        WhoIsTheSpyLocale.NAME.toString());
     }
 
     @Getter
     private final LocaleString description = WhoIsTheSpyLocale.COMMAND_FORCE_STOP_GAME;
 
-    public WhoIsTheSpyForceStopGameCommand(WhoIsTheSpy whoIsTheSpy) {
-        super(false, 2, 2, "stop", WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX + "stop", whoIsTheSpy);
+    public ForceStopGameCommand(WhoIsTheSpy whoIsTheSpy) {
+        super(
+                false,
+                2,
+                2,
+                "stop",
+                WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX + "stop",
+                whoIsTheSpy
+        );
     }
 
     @Override
@@ -33,23 +43,36 @@ public class WhoIsTheSpyForceStopGameCommand extends SubCommand {
         Game game = Game.getByName(args[1]);
 
         if (game == null) {
-            WhoIsTheSpyLocale.ERROR_GAME_NOT_EXIST.message(WhoIsTheSpyLocale.PREFIX, sender);
+            WhoIsTheSpyLocale.ERROR_GAME_NOT_EXIST.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    sender
+            );
             return;
         }
 
         if (!game.isEnabled()) {
-            WhoIsTheSpyLocale.ERROR_GAME_IS_DISABLED.message(WhoIsTheSpyLocale.PREFIX, sender);
+            WhoIsTheSpyLocale.ERROR_GAME_IS_DISABLED.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    sender
+            );
             return;
         }
 
         if (game.getGameState() != GameState.STARTED) {
-            WhoIsTheSpyLocale.ERROR_GAME_IS_NOT_STARTED.message(WhoIsTheSpyLocale.PREFIX, sender);
+            WhoIsTheSpyLocale.ERROR_GAME_IS_NOT_STARTED.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    sender
+            );
             return;
         }
 
         game.getPhaseHandler().getGamePhase().finishGameForForceStop();
 
-        WhoIsTheSpyLocale.SUCCESS_FORCE_STOP_GAME.message(WhoIsTheSpyLocale.PREFIX, sender, "%GAME%", game.getName());
+        WhoIsTheSpyLocale.SUCCESS_FORCE_STOP_GAME.message(
+                WhoIsTheSpyLocale.PREFIX,
+                sender,
+                "%GAME%", game.getName()
+        );
     }
 
     @Override

@@ -40,55 +40,100 @@ public class GamePhase implements Runnable {
     }
 
     public void finishGameForPlayerLeave() {
-        finishGame(PREFIX, GAME_END_PLAYER_LEAVE, null, true);
+        finishGame(
+                PREFIX,
+                GAME_END_PLAYER_LEAVE,
+                null,
+                true
+        );
 
         setGameState();
     }
 
     public void finishGameForNotFoundWord() {
-        finishGame(PREFIX, ERROR_NOT_FOUND_WORD, null, false);
+        finishGame(
+                PREFIX,
+                ERROR_NOT_FOUND_WORD,
+                null,
+                false
+        );
 
         setGameState();
     }
 
     public void finishGameForForceStop() {
-        finishGame(PREFIX, ADMINISTRATOR_FORCE_STOP, null, true);
+        finishGame(
+                PREFIX,
+                ADMINISTRATOR_FORCE_STOP,
+                null,
+                true
+        );
 
         setGameState();
     }
 
     public void finishGameForSwitchToDisabled() {
-        finishGame(PREFIX, ADMINISTRATOR_DISABLED_GAME, null, true);
+        finishGame(
+                PREFIX,
+                ADMINISTRATOR_DISABLED_GAME,
+                null,
+                true
+        );
 
         setGameState();
     }
 
     public void finishGameForEndCountdown() {
-        finishGame(PREFIX, GAME_DRAW_MESSAGE, GAME_DRAW_SUBTITLE, true);
+        finishGame(
+                PREFIX,
+                GAME_DRAW_MESSAGE,
+                GAME_DRAW_SUBTITLE,
+                true
+        );
 
         setGameState();
     }
 
     public void finishGameForUndercoverWin() {
-        finishGame(PREFIX, UNDERCOVER_WIN_MESSAGE, UNDERCOVER_WIN_SUBTITLE, true);
+        finishGame(
+                PREFIX,
+                UNDERCOVER_WIN_MESSAGE,
+                UNDERCOVER_WIN_SUBTITLE,
+                true
+        );
 
         setGameState();
     }
 
     public void finishGameForUndercoverLose() {
-        finishGame(PREFIX, UNDERCOVER_GUESS_WRONG_LOSE_MESSAGE, UNDERCOVER_GUESS_WRONG_LOSE_SUBTITLE, true);
+        finishGame(
+                PREFIX,
+                UNDERCOVER_GUESS_WRONG_LOSE_MESSAGE,
+                UNDERCOVER_GUESS_WRONG_LOSE_SUBTITLE,
+                true
+        );
 
         setGameState();
     }
 
     public void finishGameForGoodWin() {
-        finishGame(PREFIX, GOOD_WIN_MESSAGE, GOOD_WIN_SUBTITLE, true);
+        finishGame(
+                PREFIX,
+                GOOD_WIN_MESSAGE,
+                GOOD_WIN_SUBTITLE,
+                true
+        );
 
         setGameState();
     }
 
     public void finishGameForGoodLose() {
-        finishGame(PREFIX, GOOD_VOTE_WRONG_LOSE_MESSAGE, GOOD_VOTE_WRONG_LOSE_SUBTITLE, true);
+        finishGame(
+                PREFIX,
+                GOOD_VOTE_WRONG_LOSE_MESSAGE,
+                GOOD_VOTE_WRONG_LOSE_SUBTITLE,
+                true
+        );
 
         setGameState();
     }
@@ -104,7 +149,13 @@ public class GamePhase implements Runnable {
         }
     }
 
-    public void finishGame(LocaleString prefix, LocaleString reason, LocaleString subtitle, boolean showInfo, String... placeholder) {
+    public void finishGame(
+            LocaleString prefix,
+            LocaleString reason,
+            LocaleString subtitle,
+            boolean showInfo,
+            String... placeholder
+    ) {
         if (showInfo) {
             showGameInfo();
         }
@@ -118,9 +169,17 @@ public class GamePhase implements Runnable {
             reason.message(prefix, playerInfo.getPlayer(), placeholder);
 
             if (subtitle != null) {
-                Util.sendTitle(playerInfo.getPlayer(), GAME_END_TITLE.toString(), subtitle.toString());
+                Util.sendTitle(
+                        playerInfo.getPlayer(),
+                        GAME_END_TITLE.toString(),
+                        subtitle.toString()
+                );
             } else {
-                Util.sendTitle(playerInfo.getPlayer(), GAME_END_TITLE.toString(), "");
+                Util.sendTitle(
+                        playerInfo.getPlayer(),
+                        GAME_END_TITLE.toString(),
+                        ""
+                );
             }
         }
 
@@ -130,44 +189,52 @@ public class GamePhase implements Runnable {
     }
 
     public void showGameInfo() {
-        AtomicReference<StringBuffer> goodList = new AtomicReference<>(new StringBuffer());
-        AtomicReference<StringBuffer> voteList = new AtomicReference<>(new StringBuffer());
-        AtomicReference<StringBuffer> notVoteList = new AtomicReference<>(new StringBuffer());
-        AtomicReference<StringBuffer> abstainList = new AtomicReference<>(new StringBuffer());
+        StringBuffer goodList = new StringBuffer();
+        StringBuffer voteList = new StringBuffer();
+        StringBuffer notVoteList = new StringBuffer();
+        StringBuffer abstainList = new StringBuffer();
 
         for (PlayerInfo playerInfo : game.getGood()) {
-            goodList.get().append(SPACE.toString()).append(GOOD_LIST_FORMAT.toString()
+            goodList.append(SPACE.toString()).append(GOOD_LIST_FORMAT.toString()
                     .replace("%PLAYER%", playerInfo.getPlayer().getDisplayName()));
         }
 
         if (game.getVOTER_AND_BE_VOTED().isEmpty()) {
-            voteList.get().append(SPACE.toString()).append(NULL.toString());
+            voteList.append(SPACE.toString()).append(NULL.toString());
         } else {
             for (Map.Entry<PlayerInfo, PlayerInfo> map : game.getVOTER_AND_BE_VOTED().entrySet()) {
-                voteList.get().append(SPACE.toString()).append(VOTE_LIST_FORMAT.toString()
-                        .replace("%VOTER%", map.getKey().getPlayer().getDisplayName())
-                        .replace("%BE_VOTED%", map.getValue().getPlayer().getDisplayName()));
+                voteList.append(SPACE.toString())
+                        .append(VOTE_LIST_FORMAT.toString()
+                                .replace("%VOTER%",
+                                        map.getKey().getPlayer().getDisplayName())
+                                .replace("%BE_VOTED%",
+                                        map.getValue().getPlayer().getDisplayName()));
             }
         }
 
         for (PlayerInfo playerInfo : game.getGood()) {
-            if (!game.getVotedPlayers().contains(playerInfo) && !game.getAbstainVotePlayer().contains(playerInfo)) {
-                notVoteList.get().append(SPACE.toString()).append(NOT_VOTE_LIST_FORMAT.toString()
-                        .replace("%PLAYER%", playerInfo.getPlayer().getDisplayName()));
+            if (!game.getVotedPlayers().contains(playerInfo) &&
+                    !game.getAbstainVotePlayer().contains(playerInfo)) {
+                notVoteList.append(SPACE.toString())
+                        .append(NOT_VOTE_LIST_FORMAT.toString()
+                                .replace("%PLAYER%",
+                                        playerInfo.getPlayer().getDisplayName()));
             }
 
             if (game.getAbstainVotePlayer().contains(playerInfo)) {
-                abstainList.get().append(SPACE.toString()).append(ABSTAIN_LIST_FORMAT.toString()
-                        .replace("%PLAYER%", playerInfo.getPlayer().getDisplayName()));
+                abstainList.append(SPACE.toString())
+                        .append(ABSTAIN_LIST_FORMAT.toString()
+                                .replace("%PLAYER%",
+                                        playerInfo.getPlayer().getDisplayName()));
             }
         }
 
-        if (notVoteList.get().length() == 0) {
-            notVoteList.get().append(SPACE.toString()).append(NULL.toString());
+        if (notVoteList.length() == 0) {
+            notVoteList.append(SPACE.toString()).append(NULL.toString());
         }
 
-        if (abstainList.get().length() == 0) {
-            abstainList.get().append(SPACE.toString()).append(NULL.toString());
+        if (abstainList.length() == 0) {
+            abstainList.append(SPACE.toString()).append(NULL.toString());
         }
 
         String word;
@@ -191,15 +258,24 @@ public class GamePhase implements Runnable {
                 "%SPEND_TIME%", String.valueOf(game.getGameDuration() - endCountdown),
                 "%WORD%", word,
                 "%GUESS_WORD%", guessWord,
-                "%GOOD_LIST%", goodList.get().toString(),
-                "%VOTE_LIST%", voteList.get().toString(),
-                "%NOT_VOTE_LIST%", notVoteList.get().toString(),
-                "%ABSTAIN_LIST%", abstainList.get().toString(),
+                "%GOOD_LIST%", goodList.toString(),
+                "%VOTE_LIST%", voteList.toString(),
+                "%NOT_VOTE_LIST%", notVoteList.toString(),
+                "%ABSTAIN_LIST%", abstainList.toString(),
                 "%UNDERCOVER%", game.getUndercover().getPlayer().getDisplayName());
     }
 
-    public void callGameEndEvent(boolean calculateVote, LocaleString reason, String... placeholder) {
-        GameEndEvent gameEndEvent = new GameEndEvent(game, reason, placeholder, calculateVote);
+    public void callGameEndEvent(
+            boolean calculateVote,
+            LocaleString reason,
+            String... placeholder
+    ) {
+        GameEndEvent gameEndEvent = new GameEndEvent(
+                game,
+                reason,
+                placeholder,
+                calculateVote
+        );
         Bukkit.getPluginManager().callEvent(gameEndEvent);
     }
 
@@ -222,22 +298,38 @@ public class GamePhase implements Runnable {
         }
 
         displayVoteInventory.setCountdown(game);
-        this.whoIsTheSpy.getDisplayScoreboard().setInGameScoreboard(endCountdown, game);
-        this.whoIsTheSpy.getDisplaySelectBeQuestionedInventory().setCountdown(selectBeQuestionedCountdown, game);
+        this.whoIsTheSpy.getDisplayScoreboard()
+                .setInGameScoreboard(endCountdown, game);
+        this.whoIsTheSpy.getDisplaySelectBeQuestionedInventory()
+                .setCountdown(selectBeQuestionedCountdown, game);
 
         if (game.getBeQuestioned() != null) {
             PlayerInfo playerInfo = game.getBeQuestioned();
 
-            Util.showActionBar(ANSWER_COUNTDOWN_ACTIONBAR.toString().replace("%TIME%", String.valueOf(answerCountdown)), playerInfo.getPlayer());
+            Util.showActionBar(
+                    ANSWER_COUNTDOWN_ACTIONBAR.toString()
+                            .replace("%TIME%",
+                                    String.valueOf(answerCountdown)), playerInfo.getPlayer()
+            );
 
             if (answerCountdown <= 0) {
-                game.broadcast(PREFIX, ANSWER_COUNTDOWN_TIMEOUT, "%BE_QUESTIONED%", playerInfo.getPlayer().getDisplayName());
+                game.broadcast(
+                        PREFIX,
+                        ANSWER_COUNTDOWN_TIMEOUT,
+                        "%BE_QUESTIONED%",
+                        playerInfo.getPlayer().getDisplayName()
+                );
 
                 game.setQuestioner(playerInfo);
                 game.setBeQuestioned(null);
-                game.getPhaseHandler().getGamePhase().setSelectBeQuestionedCountdown(game.getSelectBeQuestionedDuration());
+                game.getPhaseHandler()
+                        .getGamePhase()
+                        .setSelectBeQuestionedCountdown(game.getSelectBeQuestionedDuration());
 
-                Util.clearItemStack(playerInfo.getPlayer(), ItemType.END_ANSWER.getItemStack());
+                Util.clearItemStack(
+                        playerInfo.getPlayer(),
+                        ItemType.END_ANSWER.getItemStack()
+                );
 
                 game.getQUESTIONER_SELECT_BE_QUESTIONED().show(playerInfo.getPlayer());
             }

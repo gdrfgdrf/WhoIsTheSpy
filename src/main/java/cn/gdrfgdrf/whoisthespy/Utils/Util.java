@@ -62,7 +62,9 @@ public class Util {
     }
 
     public static void showActionBar(String message, Player player) {
-        ActionBarMessage actionBarMessage = new ActionBarMessage(ChatColor.translateAlternateColorCodes('&', message));
+        ActionBarMessage actionBarMessage = new ActionBarMessage(
+                ChatColor.translateAlternateColorCodes('&', message)
+        );
         actionBarMessage.send(player);
     }
 
@@ -102,7 +104,11 @@ public class Util {
         player.sendTitle(title, subtitle, 10, 70, 20);
     }
 
-    public static void sendTitleForPlayerInfoList(List<PlayerInfo> list, String title, String subtitle) {
+    public static void sendTitleForPlayerInfoList(
+            List<PlayerInfo> list,
+            String title,
+            String subtitle
+    ) {
         for (PlayerInfo player : list) {
             sendTitle(player.getPlayer(), title, subtitle);
         }
@@ -142,11 +148,17 @@ public class Util {
         profile.getProperties().put("textures", new Property("textures", value));
 
         ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta == null) {
+            return itemStack;
+        }
 
         try {
             profileField = itemMeta.getClass().getDeclaredField("profile");
         } catch (NoSuchFieldException | SecurityException e) {
             e.printStackTrace();
+        }
+        if (profileField == null) {
+            return itemStack;
         }
 
         profileField.setAccessible(true);
@@ -178,7 +190,11 @@ public class Util {
             String sign = getURLContent("https://sessionserver.mojang.com/session/minecraft/profile/" + uid);
             if (sign != null) {
                 obj = (JsonObject) JsonParser.parseString(sign);
-                return obj.getAsJsonArray("properties").get(0).getAsJsonObject().get("value").getAsString();
+                return obj.getAsJsonArray("properties")
+                        .get(0)
+                        .getAsJsonObject()
+                        .get("value")
+                        .getAsString();
             } else {
                 return null;
             }

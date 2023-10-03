@@ -13,20 +13,31 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WhoIsTheSpySwitchGameStatusCommand extends SubCommand {
+public class SwitchGameStatusCommand extends SubCommand {
     public static final String SYNTAX;
 
     static {
-        SYNTAX = "/who switch %START%%NAME%%END%".replace("%START%", WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_START.toString())
-                .replace("%END%", WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_END.toString())
-                .replace("%NAME%", WhoIsTheSpyLocale.NAME.toString());
+        SYNTAX = "/who switch %START%%NAME%%END%"
+                .replace("%START%",
+                        WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_START.toString())
+                .replace("%END%",
+                        WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_END.toString())
+                .replace("%NAME%",
+                        WhoIsTheSpyLocale.NAME.toString());
     }
 
     @Getter
     private final LocaleString description = WhoIsTheSpyLocale.COMMAND_SWITCH_GAME_STATUS;
 
-    public WhoIsTheSpySwitchGameStatusCommand(WhoIsTheSpy whoIsTheSpy) {
-        super(false, 2, 2, "switch", WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX + "switch", whoIsTheSpy);
+    public SwitchGameStatusCommand(WhoIsTheSpy whoIsTheSpy) {
+        super(
+                false,
+                2,
+                2,
+                "switch",
+                WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX + "switch",
+                whoIsTheSpy
+        );
     }
 
     @Override
@@ -34,7 +45,10 @@ public class WhoIsTheSpySwitchGameStatusCommand extends SubCommand {
         Game game = Game.getByName(args[1]);
 
         if (game == null) {
-            WhoIsTheSpyLocale.ERROR_GAME_NOT_EXIST.message(WhoIsTheSpyLocale.PREFIX, sender);
+            WhoIsTheSpyLocale.ERROR_GAME_NOT_EXIST.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    sender
+            );
             return;
         }
 
@@ -42,12 +56,16 @@ public class WhoIsTheSpySwitchGameStatusCommand extends SubCommand {
 
         if (!game.isEnabled()) {
             Iterator<PlayerInfo> iterator = game.getPlayersInGame().iterator();
+
             while (iterator.hasNext()) {
                 PlayerInfo playerInfo = iterator.next();
                 game.callPlayerLeaveGameEvent(playerInfo);
                 iterator.remove();
 
-                WhoIsTheSpyLocale.ADMINISTRATOR_DISABLED_GAME.message(WhoIsTheSpyLocale.PREFIX, playerInfo.getPlayer());
+                WhoIsTheSpyLocale.ADMINISTRATOR_DISABLED_GAME.message(
+                        WhoIsTheSpyLocale.PREFIX,
+                        playerInfo.getPlayer()
+                );
             }
 
             if (game.getGameState() == GameState.WAITING) {
@@ -55,12 +73,22 @@ public class WhoIsTheSpySwitchGameStatusCommand extends SubCommand {
             }
 
             if (game.getGameState() == GameState.STARTED) {
-                game.getPhaseHandler().getGamePhase().finishGameForSwitchToDisabled();
+                game.getPhaseHandler()
+                        .getGamePhase()
+                        .finishGameForSwitchToDisabled();
                 game.setGameState(GameState.WAITING);
             }
         }
 
-        WhoIsTheSpyLocale.SUCCESS_SWITCH_GAME_STATUS.message(WhoIsTheSpyLocale.PREFIX, sender, "%GAME%", args[1], "%STATUS%", (game.isEnabled() ? WhoIsTheSpyLocale.ENABLED.toString() : WhoIsTheSpyLocale.DISABLED.toString()));
+        WhoIsTheSpyLocale.SUCCESS_SWITCH_GAME_STATUS.message(
+                WhoIsTheSpyLocale.PREFIX,
+                sender,
+                "%GAME%",
+                args[1],
+                "%STATUS%",
+                (game.isEnabled() ?
+                        WhoIsTheSpyLocale.ENABLED.toString() : WhoIsTheSpyLocale.DISABLED.toString())
+        );
     }
 
     @Override

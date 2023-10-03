@@ -38,7 +38,6 @@ public class Config {
     }
 
     private void load(File file) {
-
         if (!file.getName().equals("config.yml")) {
             copy(file.getName());
         }

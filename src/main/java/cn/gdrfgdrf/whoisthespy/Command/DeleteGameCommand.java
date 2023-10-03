@@ -10,20 +10,31 @@ import org.bukkit.command.CommandSender;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WhoIsTheSpyDeleteGameCommand extends SubCommand {
+public class DeleteGameCommand extends SubCommand {
     public static final String SYNTAX;
 
     static {
-        SYNTAX = "/who delete %START%%NAME%%END%".replace("%START%", WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_START.toString())
-                .replace("%END%", WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_END.toString())
-                .replace("%NAME%", WhoIsTheSpyLocale.NAME.toString());
+        SYNTAX = "/who delete %START%%NAME%%END%"
+                .replace("%START%",
+                        WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_START.toString())
+                .replace("%END%",
+                        WhoIsTheSpyLocale.ARGUMENT_PLACEHOLDER_END.toString())
+                .replace("%NAME%",
+                        WhoIsTheSpyLocale.NAME.toString());
     }
 
     @Getter
     private final LocaleString description = WhoIsTheSpyLocale.COMMAND_DELETE;
 
-    public WhoIsTheSpyDeleteGameCommand(WhoIsTheSpy whoIsTheSpy) {
-        super(false, 2, 2, "delete", WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX + "delete", whoIsTheSpy);
+    public DeleteGameCommand(WhoIsTheSpy whoIsTheSpy) {
+        super(
+                false,
+                2,
+                2,
+                "delete",
+                WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX + "delete",
+                whoIsTheSpy
+        );
     }
 
     @Override
@@ -31,17 +42,28 @@ public class WhoIsTheSpyDeleteGameCommand extends SubCommand {
         Game game = Game.getByName(args[1]);
 
         if (game == null) {
-            WhoIsTheSpyLocale.ERROR_GAME_NOT_EXIST.message(WhoIsTheSpyLocale.PREFIX, sender);
+            WhoIsTheSpyLocale.ERROR_GAME_NOT_EXIST.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    sender
+            );
             return;
         }
 
         if (game.isEnabled()) {
-            WhoIsTheSpyLocale.ERROR_GAME_IS_ENABLED.message(WhoIsTheSpyLocale.PREFIX, sender);
+            WhoIsTheSpyLocale.ERROR_GAME_IS_ENABLED.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    sender
+            );
             return;
         }
 
         game.delete();
-        WhoIsTheSpyLocale.SUCCESS_DELETE_GAME.message(WhoIsTheSpyLocale.PREFIX, sender, "%GAME%", args[1]);
+
+        WhoIsTheSpyLocale.SUCCESS_DELETE_GAME.message(
+                WhoIsTheSpyLocale.PREFIX,
+                sender,
+                "%GAME%", args[1]
+        );
     }
 
     @Override

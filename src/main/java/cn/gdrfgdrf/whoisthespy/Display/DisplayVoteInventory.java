@@ -22,7 +22,9 @@ public class DisplayVoteInventory {
 
     public void setCountdown(Game game) {
         for (PlayerInfo playerInfo : game.getInitVotePlayers()) {
-            if (!game.getVotedPlayers().contains(playerInfo) && !game.getAbstainVotePlayer().contains(playerInfo) && game.getGood().contains(playerInfo)) {
+            if (!game.getVotedPlayers().contains(playerInfo) &&
+                    !game.getAbstainVotePlayer().contains(playerInfo) &&
+                    game.getGood().contains(playerInfo)) {
                 if (!playerInfoCountdown.containsKey(playerInfo)) {
                     playerInfoCountdown.put(playerInfo, game.getVoteDuration());
                 }
@@ -31,11 +33,14 @@ public class DisplayVoteInventory {
             }
         }
 
-        playerInfoCountdown.replaceAll((k, v) -> v - 1);
+        playerInfoCountdown.replaceAll((playerInfo, countdown) -> countdown - 1);
 
-        playerInfoCountdown.forEach((k, v) -> {
-            Inventory inventory = game.getPlayerInfoAndVoteInventory().get(k).getChestGui().getInventory();
-            Inventory openInventory = k.getPlayer().getOpenInventory().getTopInventory();
+        playerInfoCountdown.forEach((playerInfo, countdown) -> {
+            Inventory inventory = game.getPlayerInfoAndVoteInventory()
+                    .get(playerInfo)
+                    .getChestGui()
+                    .getInventory();
+            Inventory openInventory = playerInfo.getPlayer().getOpenInventory().getTopInventory();
 
             if (openInventory == inventory) {
                 ItemStack itemStack = inventory.getItem(49);
@@ -44,24 +49,31 @@ public class DisplayVoteInventory {
                     if (itemStack.getType() == ItemType.NAVIGATION_COUNTDOWN_VOTE.getType()) {
                         ItemMeta itemMeta = itemStack.getItemMeta();
 
-                        itemMeta.setDisplayName(ITEM_NAVIGATION_COUNTDOWN_VOTE.toString());
+                        if (itemMeta != null) {
+                            itemMeta.setDisplayName(ITEM_NAVIGATION_COUNTDOWN_VOTE.toString());
 
-                        String[] lore = ITEM_NAVIGATION_COUNTDOWN_VOTE_LORE.getValues();
-                        if (lore != null && checkLore(lore)) {
-                            itemMeta.setLore(toList(lore, v));
-                        }
-
-                        itemStack.setItemMeta(itemMeta);
-
-                        if (v <= 0) {
-                            if (!game.getAbstainVotePlayer().contains(k)) {
-                                game.getAbstainVotePlayer().add(k);
+                            String[] lore = ITEM_NAVIGATION_COUNTDOWN_VOTE_LORE.getValues();
+                            if (lore != null && checkLore(lore)) {
+                                itemMeta.setLore(toList(lore, countdown));
                             }
 
-                            k.getPlayer().closeInventory();
-                            Util.clearItemStack(k.getPlayer(), ItemType.INIT_VOTE.getItemStack());
+                            itemStack.setItemMeta(itemMeta);
+                        }
 
-                            game.broadcast(PREFIX, VOTE_TIMEOUT, "%PLAYER%", k.getPlayer().getDisplayName());
+                        if (countdown <= 0) {
+                            if (!game.getAbstainVotePlayer().contains(playerInfo)) {
+                                game.getAbstainVotePlayer().add(playerInfo);
+                            }
+
+                            playerInfo.getPlayer().closeInventory();
+                            Util.clearItemStack(playerInfo.getPlayer(), ItemType.INIT_VOTE.getItemStack());
+
+                            game.broadcast(
+                                    PREFIX,
+                                    VOTE_TIMEOUT,
+                                    "%PLAYER%",
+                                    playerInfo.getPlayer().getDisplayName()
+                            );
                         }
                     }
                 }

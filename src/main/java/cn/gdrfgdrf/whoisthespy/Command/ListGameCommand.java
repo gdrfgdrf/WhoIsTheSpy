@@ -12,20 +12,30 @@ import org.bukkit.entity.Player;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WhoIsTheSpyListGameCommand extends SubCommand {
+public class ListGameCommand extends SubCommand {
     public static final String SYNTAX = "/who list";
 
     @Getter
     private final LocaleString description = WhoIsTheSpyLocale.COMMAND_LIST_GAME;
 
-    public WhoIsTheSpyListGameCommand(WhoIsTheSpy whoIsTheSpy) {
-        super(false, 1, 1, "list", WhoIsTheSpyCommand.PERMISSION_USER_PREFIX + "list", whoIsTheSpy);
+    public ListGameCommand(WhoIsTheSpy whoIsTheSpy) {
+        super(
+                false,
+                1,
+                1,
+                "list",
+                WhoIsTheSpyCommand.PERMISSION_USER_PREFIX + "list",
+                whoIsTheSpy
+        );
     }
 
     @Override
     public void onCommand(CommandSender sender, String[] args) {
         if (whoIsTheSpy.getGames().isEmpty()) {
-            WhoIsTheSpyLocale.ERROR_NO_GAME.message(WhoIsTheSpyLocale.PREFIX, sender);
+            WhoIsTheSpyLocale.ERROR_NO_GAME.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    sender
+            );
         } else {
             List<Game> enabledGames = new LinkedList<>();
 
@@ -37,7 +47,10 @@ public class WhoIsTheSpyListGameCommand extends SubCommand {
                 }
 
                 if (enabledGames.isEmpty()) {
-                    WhoIsTheSpyLocale.ERROR_NO_GAME.message(WhoIsTheSpyLocale.PREFIX, sender);
+                    WhoIsTheSpyLocale.ERROR_NO_GAME.message(
+                            WhoIsTheSpyLocale.PREFIX,
+                            sender
+                    );
                     return;
                 }
             }
@@ -55,7 +68,10 @@ public class WhoIsTheSpyListGameCommand extends SubCommand {
 
             if (sender.isOp()) {
                 for (Game game : whoIsTheSpy.getGames()) {
-                    sender.sendMessage(bulletPoint + game.getName() + ": " + (game.isEnabled() ? WhoIsTheSpyLocale.ENABLED : WhoIsTheSpyLocale.DISABLED));
+                    sender.sendMessage(
+                            bulletPoint + game.getName() + ": " +
+                                    (game.isEnabled() ? WhoIsTheSpyLocale.ENABLED : WhoIsTheSpyLocale.DISABLED)
+                    );
                 }
             } else {
                 for (Game game : enabledGames) {

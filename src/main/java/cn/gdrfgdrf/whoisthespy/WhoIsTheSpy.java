@@ -48,11 +48,6 @@ public class WhoIsTheSpy {
     private final Config config;
 
     @Getter
-    private final ExecutorService executorService;
-
-    @Getter
-    private final ScheduledExecutorService scheduledExecutorService;
-    @Getter
     private final List<PlayerInfo> players = new LinkedList<>();
     @Getter
     private String gameChatFormat;
@@ -66,7 +61,7 @@ public class WhoIsTheSpy {
     @Getter
     private int signUpdaterTask;
 
-    public WhoIsTheSpy(JavaPlugin plugin, Config config, ExecutorService executorService, ScheduledExecutorService scheduledExecutorService) {
+    public WhoIsTheSpy(JavaPlugin plugin, Config config) {
         instance = this;
 
         this.displayScoreboard = new DisplayScoreboard();
@@ -74,8 +69,6 @@ public class WhoIsTheSpy {
 
         this.plugin = plugin;
         this.config = config;
-        this.executorService = executorService;
-        this.scheduledExecutorService = scheduledExecutorService;
     }
 
     public static void sendMessageToConsole(String message) {

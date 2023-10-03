@@ -67,16 +67,32 @@ public class PlayerData {
         boolean flying = player.isFlying();
         boolean allowFlight = player.getAllowFlight();
         float exp = player.getExp();
+
         ItemStack[] contents = player.getInventory().getContents();
         ItemStack[] armorContents = player.getInventory().getArmorContents();
         GameMode gameMode = player.getGameMode();
         Scoreboard scoreboard = player.getScoreboard();
         Collection<PotionEffect> activePotionEffects = player.getActivePotionEffects();
 
-        PlayerData playerData = new PlayerData(health, foodLevel, level, fireTicks, flying, allowFlight,
-                exp, contents, armorContents, gameMode, scoreboard, activePotionEffects);
+        PlayerData playerData = new PlayerData(
+                health,
+                foodLevel,
+                level,
+                fireTicks,
+                flying,
+                allowFlight,
+                exp,
+                contents,
+                armorContents,
+                gameMode,
+                scoreboard,
+                activePotionEffects
+        );
 
-        playerData.saveToFile(new File(WhoIsTheSpy.PLUGIN_FOLDER + "/PlayerData", player.getUniqueId() + ".yml"));
+        playerData.saveToFile(new File(
+                WhoIsTheSpy.PLUGIN_FOLDER + "/PlayerData",
+                player.getUniqueId() + ".yml"
+        ));
         return playerData;
     }
 
@@ -84,6 +100,7 @@ public class PlayerData {
         return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 
+    @SuppressWarnings("unchecked")
     public static PlayerData getFromFile(File file) {
         try {
 
@@ -148,7 +165,6 @@ public class PlayerData {
 
     @SuppressWarnings("all")
     public void apply(Player player) {
-
         if (file != null) {
             file.delete();
         }

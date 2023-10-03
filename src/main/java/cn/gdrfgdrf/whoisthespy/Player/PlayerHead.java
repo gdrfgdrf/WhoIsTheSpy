@@ -30,7 +30,14 @@ public class PlayerHead {
     public ItemStack getItemStack() {
         ItemMeta itemMeta = itemStack.getItemMeta();
 
-        itemMeta.setDisplayName(WhoIsTheSpyLocale.PLAYER_HEAD_PREFIX.toString().replace("%PLAYER%", player.getDisplayName()));
+        if (itemMeta == null) {
+            return itemStack;
+        }
+
+        itemMeta.setDisplayName(
+                WhoIsTheSpyLocale.PLAYER_HEAD_PREFIX.toString()
+                        .replace("%PLAYER%", player.getDisplayName())
+        );
 
         String[] values = WhoIsTheSpyLocale.PLAYER_HEAD_LORE.getValues();
         if (values != null && checkLore(values)) {
@@ -39,8 +46,15 @@ public class PlayerHead {
             itemMeta.setLore(Arrays.asList(values));
         }
 
-        NamespacedKey namespacedKey = new NamespacedKey(WhoIsTheSpy.getInstance().getPlugin(), WhoIsTheSpy.NAME_SPACED_KEY);
-        itemMeta.getPersistentDataContainer().set(namespacedKey, new UUIDDataType(), player.getUniqueId());
+        NamespacedKey namespacedKey = new NamespacedKey(
+                WhoIsTheSpy.getInstance().getPlugin(),
+                WhoIsTheSpy.NAME_SPACED_KEY
+        );
+        itemMeta.getPersistentDataContainer().set(
+                namespacedKey,
+                new UUIDDataType(),
+                player.getUniqueId()
+        );
 
         itemStack.setItemMeta(itemMeta);
 

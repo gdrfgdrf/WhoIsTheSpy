@@ -24,32 +24,40 @@ public class WhoIsTheSpyCommand implements TabExecutor {
     public WhoIsTheSpyCommand(WhoIsTheSpy whoIsTheSpy) {
         Objects.requireNonNull(whoIsTheSpy.getPlugin().getCommand("whoisthespy")).setExecutor(this);
 
-        commands.add(new WhoIsTheSpyHelpCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpyJoinGameCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpyLeaveGameCommand(whoIsTheSpy));
+        commands.add(new HelpCommand(whoIsTheSpy));
+        commands.add(new JoinGameCommand(whoIsTheSpy));
+        commands.add(new LeaveGameCommand(whoIsTheSpy));
 
-        commands.add(new WhoIsTheSpyAdminHelpCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpyCreateGameCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpyDeleteGameCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpySaveGameCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpyListGameCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpySetGameNameCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpySetGameMinPlayerCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpySetGameMaxPlayerCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpySetGameCountdownCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpySetGameDurationCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpySetGameSelectBeQuestionedDurationCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpySetGameAnswerDurationCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpySetGameVoteDurationCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpySwitchGameStatusCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpyForceStopGameCommand(whoIsTheSpy));
-        commands.add(new WhoIsTheSpyReloadCommand(whoIsTheSpy));
+        commands.add(new AdminHelpCommand(whoIsTheSpy));
+        commands.add(new CreateGameCommand(whoIsTheSpy));
+        commands.add(new DeleteGameCommand(whoIsTheSpy));
+        commands.add(new SaveGameCommand(whoIsTheSpy));
+        commands.add(new ListGameCommand(whoIsTheSpy));
+        commands.add(new SetGameNameCommand(whoIsTheSpy));
+        commands.add(new SetGameMinPlayerCommand(whoIsTheSpy));
+        commands.add(new SetGameMaxPlayerCommand(whoIsTheSpy));
+        commands.add(new SetGameCountdownCommand(whoIsTheSpy));
+        commands.add(new SetGameDurationCommand(whoIsTheSpy));
+        commands.add(new SetGameSelectBeQuestionedDurationCommand(whoIsTheSpy));
+        commands.add(new SetGameAnswerDurationCommand(whoIsTheSpy));
+        commands.add(new SetGameVoteDurationCommand(whoIsTheSpy));
+        commands.add(new SwitchGameStatusCommand(whoIsTheSpy));
+        commands.add(new ForceStopGameCommand(whoIsTheSpy));
+        commands.add(new ReloadCommand(whoIsTheSpy));
 
-        Permission administrator = new Permission(PERMISSION_ADMINISTRATOR_PREFIX + "*", "Provides access to all WhoIsTheSpy commands", PermissionDefault.OP);
-        Permission user = new Permission(PERMISSION_USER_PREFIX + "*", "Provides access to basic WhoIsTheSpy commands", PermissionDefault.TRUE);
+        Permission administrator = new Permission(
+                PERMISSION_ADMINISTRATOR_PREFIX + "*",
+                "Provides access to all WhoIsTheSpy commands", PermissionDefault.OP
+        );
+        Permission user = new Permission(
+                PERMISSION_USER_PREFIX + "*",
+                "Provides access to basic WhoIsTheSpy commands", PermissionDefault.TRUE
+        );
 
         for (SubCommand subCommand : commands) {
-            if (subCommand.getPermission().startsWith(WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX)) {
+            if (subCommand.getPermission().startsWith(
+                    WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX
+            )) {
                 administrator.getChildren().put(subCommand.permission, true);
             } else {
                 user.getChildren().put(subCommand.permission, true);
@@ -61,8 +69,14 @@ public class WhoIsTheSpyCommand implements TabExecutor {
     }
 
     @Override
-    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, String label, String @NonNull [] args) {
-        if (!label.equalsIgnoreCase("whoisthespy") && !label.equalsIgnoreCase("who")) {
+    public boolean onCommand(
+            @NonNull CommandSender sender,
+            @NonNull Command command,
+            String label,
+            String @NonNull [] args
+    ) {
+        if (!label.equalsIgnoreCase("whoisthespy") &&
+                !label.equalsIgnoreCase("who")) {
             return true;
         }
 
@@ -86,14 +100,22 @@ public class WhoIsTheSpyCommand implements TabExecutor {
         }
 
         if (showHelp) {
-            WhoIsTheSpyLocale.ERROR_COMMAND_NOT_FOUND.message(WhoIsTheSpyLocale.PREFIX, sender);
+            WhoIsTheSpyLocale.ERROR_COMMAND_NOT_FOUND.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    sender
+            );
         }
 
         return true;
     }
 
     @Override
-    public List<String> onTabComplete(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, String[] args) {
+    public List<String> onTabComplete(
+            @NonNull CommandSender sender,
+            @NonNull Command command,
+            @NonNull String label,
+            String[] args
+    ) {
         List<String> result = new LinkedList<>();
 
         if (args.length == 1) {
@@ -125,21 +147,34 @@ public class WhoIsTheSpyCommand implements TabExecutor {
 
     private void execute(CommandSender sender, String[] args, SubCommand subCommand) {
         if (sender.hasPermission(subCommand.getPermission())) {
-            if (!subCommand.isOnlyPlayers() || sender instanceof Player) {
+            if (!subCommand.isOnlyPlayers() ||
+                    sender instanceof Player) {
                 if (args.length == 0) {
                     subCommand.onCommand(sender, args);
                 } else {
-                    if (args.length >= subCommand.getMinArgs() && args.length <= subCommand.maxArgs) {
+                    if (args.length >= subCommand.getMinArgs() &&
+                            args.length <= subCommand.maxArgs) {
                         subCommand.onCommand(sender, args);
                     } else {
-                        WhoIsTheSpyLocale.ERROR_SYNTAX.message(WhoIsTheSpyLocale.PREFIX, sender, "%SYNTAX%", subCommand.getSyntax());
+                        WhoIsTheSpyLocale.ERROR_SYNTAX.message(
+                                WhoIsTheSpyLocale.PREFIX,
+                                sender,
+                                "%SYNTAX%",
+                                subCommand.getSyntax()
+                        );
                     }
                 }
             } else {
-                WhoIsTheSpyLocale.ERROR_ONLY_PLAYERS.message(WhoIsTheSpyLocale.PREFIX, sender);
+                WhoIsTheSpyLocale.ERROR_ONLY_PLAYERS.message(
+                        WhoIsTheSpyLocale.PREFIX,
+                        sender
+                );
             }
         } else {
-            WhoIsTheSpyLocale.ERROR_NO_PERMISSIONS.message(WhoIsTheSpyLocale.PREFIX, sender);
+            WhoIsTheSpyLocale.ERROR_NO_PERMISSIONS.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    sender
+            );
         }
     }
 
