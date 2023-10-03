@@ -23,7 +23,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import java.util.UUID;
 
 public class InventoryClickListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public InventoryClickListener(WhoIsTheSpy whoIsTheSpy) {
@@ -43,7 +42,9 @@ public class InventoryClickListener implements Listener {
             event.setCancelled(true);
         }
 
-        if (itemStack == null || itemStack.getItemMeta() == null || inventory == null) {
+        if (itemStack == null ||
+                itemStack.getItemMeta() == null ||
+                inventory == null) {
             return;
         }
 
@@ -52,52 +53,83 @@ public class InventoryClickListener implements Listener {
 
             if (game.getQUESTIONER_SELECT_BE_QUESTIONED().getInventory() == inventory) {
                 if (game.getQuestioner() != playerInfo) {
-                    WhoIsTheSpyLocale.NOT_QUESTIONER.message(WhoIsTheSpyLocale.PREFIX, player);
+                    WhoIsTheSpyLocale.NOT_QUESTIONER.message(
+                            WhoIsTheSpyLocale.PREFIX,
+                            player
+                    );
+                    return;
+                }
+                if (itemStack.getType() != Material.PLAYER_HEAD) {
                     return;
                 }
 
-                if (itemStack.getType() == Material.PLAYER_HEAD) {
-                    ItemMeta itemMeta = itemStack.getItemMeta();
+                ItemMeta itemMeta = itemStack.getItemMeta();
 
-                    NamespacedKey namespacedKey = new NamespacedKey(whoIsTheSpy.getPlugin(), WhoIsTheSpy.NAME_SPACED_KEY);
-                    PersistentDataContainer container = itemMeta.getPersistentDataContainer();
-                    UUID uuid = container.get(namespacedKey, new UUIDDataType());
+                NamespacedKey namespacedKey = new NamespacedKey(
+                        whoIsTheSpy.getPlugin(),
+                        WhoIsTheSpy.NAME_SPACED_KEY
+                );
+                PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+                UUID uuid = container.get(namespacedKey, new UUIDDataType());
+                if (uuid == null) {
+                    return;
+                }
 
-                    if (uuid != null) {
-                        Player clicked_player = Bukkit.getPlayer(uuid);
+                Player clicked_player = Bukkit.getPlayer(uuid);
+                if (clicked_player == null) {
+                    return;
+                }
 
-                        if (clicked_player != null) {
-                            PlayerInfo clicked_playerInfo = PlayerInfo.getFromPlayer(clicked_player);
+                PlayerInfo clicked_playerInfo = PlayerInfo.getFromPlayer(clicked_player);
+                if (clicked_playerInfo == null) {
+                    return;
+                }
 
-                            if (clicked_playerInfo != null) {
-                                if (clicked_playerInfo == playerInfo) {
-                                    WhoIsTheSpyLocale.CANNOT_SELECT_SELF.message(WhoIsTheSpyLocale.PREFIX, player);
-                                    return;
-                                }
+                if (clicked_playerInfo == playerInfo) {
+                    WhoIsTheSpyLocale.CANNOT_SELECT_SELF.message(
+                            WhoIsTheSpyLocale.PREFIX,
+                            player
+                    );
+                    return;
+                }
 
-                                if (clicked_playerInfo.isInGame()) {
-                                    if (game.getBeQuestioned() == null) {
-                                        game.getPhaseHandler().getGamePhase().setAnswerCountdown(game.getAnswerDuration());
+                if (clicked_playerInfo.isInGame()) {
+                    if (game.getBeQuestioned() == null) {
+                        game.getPhaseHandler()
+                                .getGamePhase()
+                                .setAnswerCountdown(game.getAnswerDuration());
 
-                                        game.setBeQuestioned(clicked_playerInfo);
+                        game.setBeQuestioned(clicked_playerInfo);
 
-                                        Util.sendTitleForPlayerInfoList(game.getPlayersInGame(), WhoIsTheSpyLocale.QUESTIONER_TO_BE_QUESTIONED_TITLE.toString(), clicked_player.getDisplayName());
-                                        game.broadcast(WhoIsTheSpyLocale.PREFIX, WhoIsTheSpyLocale.QUESTIONER_TO_BE_QUESTIONED_MESSAGE, "%QUESTIONER%", player.getDisplayName(), "%BE_QUESTIONED%", clicked_player.getDisplayName());
+                        Util.sendTitleForPlayerInfoList(
+                                game.getPlayersInGame(),
+                                WhoIsTheSpyLocale.QUESTIONER_TO_BE_QUESTIONED_TITLE.toString(),
+                                clicked_player.getDisplayName()
+                        );
+                        game.broadcast(
+                                WhoIsTheSpyLocale.PREFIX,
+                                WhoIsTheSpyLocale.QUESTIONER_TO_BE_QUESTIONED_MESSAGE,
+                                "%QUESTIONER%",
+                                player.getDisplayName(),
+                                "%BE_QUESTIONED%",
+                                clicked_player.getDisplayName()
+                        );
 
-                                        player.closeInventory();
-                                        Util.clearItemStack(player, ItemType.END_ANSWER.getItemStack());
+                        player.closeInventory();
+                        Util.clearItemStack(player, ItemType.END_ANSWER.getItemStack());
 
-                                        if (whoIsTheSpy.getConfig().getConfiguration().isInt("ItemSlot.END_ANSWER")) {
-                                            clicked_player.getInventory().setItem(whoIsTheSpy.getConfig().getConfiguration().getInt("ItemSlot.END_ANSWER"), ItemType.END_ANSWER.getItemStack());
-                                        } else {
-                                            clicked_player.getInventory().setItem(4, ItemType.END_ANSWER.getItemStack());
-                                        }
-                                    } else {
-                                        WhoIsTheSpyLocale.ALREADY_SELECT_BE_QUESTIONED.message(WhoIsTheSpyLocale.PREFIX, player);
-                                    }
-                                }
-                            }
+                        if (whoIsTheSpy.getConfig().getConfiguration().isInt("ItemSlot.END_ANSWER")) {
+                            clicked_player.getInventory().setItem(
+                                    whoIsTheSpy.getConfig().getConfiguration().getInt("ItemSlot.END_ANSWER"), ItemType.END_ANSWER.getItemStack()
+                            );
+                        } else {
+                            clicked_player.getInventory().setItem(4, ItemType.END_ANSWER.getItemStack());
                         }
+                    } else {
+                        WhoIsTheSpyLocale.ALREADY_SELECT_BE_QUESTIONED.message(
+                                WhoIsTheSpyLocale.PREFIX,
+                                player
+                        );
                     }
                 }
             }
@@ -109,46 +141,69 @@ public class InventoryClickListener implements Listener {
                     if (!game.getInitVotePlayers().contains(playerInfo)) {
                         game.getInitVotePlayers().add(playerInfo);
                     }
+                    if (itemStack.getType() != Material.PLAYER_HEAD) {
+                        return;
+                    }
 
-                    if (itemStack.getType() == Material.PLAYER_HEAD) {
-                        ItemMeta itemMeta = itemStack.getItemMeta();
+                    ItemMeta itemMeta = itemStack.getItemMeta();
 
-                        NamespacedKey namespacedKey = new NamespacedKey(whoIsTheSpy.getPlugin(), WhoIsTheSpy.NAME_SPACED_KEY);
-                        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
-                        UUID uuid = container.get(namespacedKey, new UUIDDataType());
+                    NamespacedKey namespacedKey = new NamespacedKey(
+                            whoIsTheSpy.getPlugin(),
+                            WhoIsTheSpy.NAME_SPACED_KEY
+                    );
+                    PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+                    UUID uuid = container.get(namespacedKey, new UUIDDataType());
+                    if (uuid == null) {
+                        return;
+                    }
 
-                        if (uuid != null) {
-                            Player clicked_player = Bukkit.getPlayer(uuid);
+                    Player clicked_player = Bukkit.getPlayer(uuid);
+                    if (clicked_player == null) {
+                        return;
+                    }
 
-                            if (clicked_player != null) {
-                                PlayerInfo clicked_playerInfo = PlayerInfo.getFromPlayer(clicked_player);
+                    PlayerInfo clicked_playerInfo = PlayerInfo.getFromPlayer(clicked_player);
+                    if (clicked_playerInfo == null) {
+                        return;
+                    }
 
-                                if (clicked_playerInfo != null) {
-                                    if (clicked_playerInfo == playerInfo) {
-                                        WhoIsTheSpyLocale.CANNOT_SELECT_SELF.message(WhoIsTheSpyLocale.PREFIX, player);
-                                        return;
-                                    }
+                    if (clicked_playerInfo == playerInfo) {
+                        WhoIsTheSpyLocale.CANNOT_SELECT_SELF.message(
+                                WhoIsTheSpyLocale.PREFIX,
+                                player
+                        );
+                        return;
+                    }
 
-                                    if (clicked_playerInfo.isInGame()) {
-                                        if (game.getVotedPlayers().contains(playerInfo)) {
-                                            WhoIsTheSpyLocale.ALREADY_VOTED.message(WhoIsTheSpyLocale.PREFIX, player);
-                                            return;
-                                        }
-
-                                        game.getVotedPlayers().add(playerInfo);
-                                        game.getVOTER_AND_BE_VOTED().put(playerInfo, clicked_playerInfo);
-
-                                        Util.sendTitleForPlayerInfoList(game.getPlayersInGame(), WhoIsTheSpyLocale.VOTE_TITLE.toString(), WhoIsTheSpyLocale.VOTE_SUBTITLE.toString()
-                                                .replace("%VOTER%", player.getDisplayName())
-                                                .replace("%BE_VOTED%", clicked_player.getDisplayName()));
-                                        game.broadcast(WhoIsTheSpyLocale.PREFIX, WhoIsTheSpyLocale.VOTE_MESSAGE, "%VOTER%", player.getDisplayName(), "%BE_VOTED%", clicked_player.getDisplayName());
-
-                                        player.closeInventory();
-                                        Util.clearItemStack(player, ItemType.INIT_VOTE.getItemStack());
-                                    }
-                                }
-                            }
+                    if (clicked_playerInfo.isInGame()) {
+                        if (game.getVotedPlayers().contains(playerInfo)) {
+                            WhoIsTheSpyLocale.ALREADY_VOTED.message(
+                                    WhoIsTheSpyLocale.PREFIX,
+                                    player
+                            );
+                            return;
                         }
+
+                        game.getVotedPlayers().add(playerInfo);
+                        game.getVOTER_AND_BE_VOTED().put(playerInfo, clicked_playerInfo);
+
+                        Util.sendTitleForPlayerInfoList(
+                                game.getPlayersInGame(),
+                                WhoIsTheSpyLocale.VOTE_TITLE.toString(),
+                                WhoIsTheSpyLocale.VOTE_SUBTITLE.toString()
+                                        .replace("%VOTER%", player.getDisplayName())
+                                        .replace("%BE_VOTED%", clicked_player.getDisplayName()));
+                        game.broadcast(
+                                WhoIsTheSpyLocale.PREFIX,
+                                WhoIsTheSpyLocale.VOTE_MESSAGE,
+                                "%VOTER%",
+                                player.getDisplayName(),
+                                "%BE_VOTED%",
+                                clicked_player.getDisplayName()
+                        );
+
+                        player.closeInventory();
+                        Util.clearItemStack(player, ItemType.INIT_VOTE.getItemStack());
                     }
                 } else {
                     WhoIsTheSpyLocale.NOT_GOOD.message(WhoIsTheSpyLocale.PREFIX, player);

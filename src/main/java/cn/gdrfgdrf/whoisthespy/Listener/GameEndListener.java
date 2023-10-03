@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 import static cn.gdrfgdrf.whoisthespy.Locale.WhoIsTheSpyLocale.PREFIX;
 
 public class GameEndListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public GameEndListener(WhoIsTheSpy whoIsTheSpy) {
@@ -36,9 +35,13 @@ public class GameEndListener implements Listener {
             PlayerInfo mostVote = calculate(game);
 
             if (game.getUndercover() == mostVote) {
-                game.getPhaseHandler().getGamePhase().finishGameForGoodWin();
+                game.getPhaseHandler()
+                        .getGamePhase()
+                        .finishGameForGoodWin();
             } else {
-                game.getPhaseHandler().getGamePhase().finishGameForGoodLose();
+                game.getPhaseHandler()
+                        .getGamePhase()
+                        .finishGameForGoodLose();
             }
 
             Iterator<PlayerInfo> iterator = game.getPlayersInGame().iterator();

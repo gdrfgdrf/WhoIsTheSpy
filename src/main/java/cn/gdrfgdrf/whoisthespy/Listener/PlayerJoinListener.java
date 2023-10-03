@@ -13,7 +13,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.io.File;
 
 public class PlayerJoinListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public PlayerJoinListener(WhoIsTheSpy whoIsTheSpy) {

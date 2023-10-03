@@ -13,7 +13,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class InventoryCloseListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public InventoryCloseListener(WhoIsTheSpy whoIsTheSpy) {
@@ -34,7 +33,11 @@ public class InventoryCloseListener implements Listener {
             if (game.getGood().contains(playerInfo)) {
                 ChestGui voteGui = game.getPlayerInfoAndVoteInventory().get(playerInfo).getChestGui();
 
-                if (game.getInitVotePlayers().contains(playerInfo) && !game.getVotedPlayers().contains(playerInfo) && inventory == voteGui.getInventory() && !game.getAbstainVotePlayer().contains(playerInfo)) {
+                if (game.getInitVotePlayers().contains(playerInfo) &&
+                        !game.getVotedPlayers().contains(playerInfo) &&
+                        inventory == voteGui.getInventory() &&
+                        !game.getAbstainVotePlayer().contains(playerInfo)
+                ) {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
@@ -50,14 +53,25 @@ public class InventoryCloseListener implements Listener {
         }
     }
 
-    private void checkQuestionInventory(Player player, Inventory inventory, PlayerInfo playerInfo, Game game) {
+    private void checkQuestionInventory(
+            Player player,
+            Inventory inventory,
+            PlayerInfo playerInfo,
+            Game game
+    ) {
         PlayerInfo questioner = game.getQuestioner();
 
-        if (questioner != null && questioner == playerInfo && game.getBeQuestioned() == null && (inventory == game.getQUESTIONER_SELECT_BE_QUESTIONED().getInventory() || inventory == game.getPlayerInfoAndVoteInventory().get(playerInfo).getChestGui().getInventory())) {
+        if (questioner != null &&
+                questioner == playerInfo &&
+                game.getBeQuestioned() == null &&
+                (inventory == game.getQUESTIONER_SELECT_BE_QUESTIONED().getInventory() ||
+                        inventory == game.getPlayerInfoAndVoteInventory().get(playerInfo).getChestGui().getInventory())
+        ) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (game.getVotedPlayers().contains(playerInfo) || game.getAbstainVotePlayer().contains(playerInfo)) {
+                    if (game.getVotedPlayers().contains(playerInfo) ||
+                            game.getAbstainVotePlayer().contains(playerInfo)) {
                         game.getQUESTIONER_SELECT_BE_QUESTIONED().show(player);
                     } else {
                         if (!game.getInitVotePlayers().contains(playerInfo)) {

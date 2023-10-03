@@ -12,9 +12,9 @@ import static cn.gdrfgdrf.whoisthespy.Locale.WhoIsTheSpyLocale.*;
 
 public class WaitingPhase implements Runnable {
 
-    private int countdown;
     private final WhoIsTheSpy whoIsTheSpy;
     private final Game game;
+    private int countdown;
 
     public WaitingPhase(WhoIsTheSpy whoIsTheSpy, Game game) {
         this.whoIsTheSpy = whoIsTheSpy;
@@ -70,7 +70,8 @@ public class WaitingPhase implements Runnable {
             countdown = -1;
         }
 
-        this.whoIsTheSpy.getDisplayScoreboard().setWaitingScoreboard(countdown, game);
+        this.whoIsTheSpy.getDisplayScoreboard()
+                .setWaitingScoreboard(countdown, game);
 
         countdown--;
     }

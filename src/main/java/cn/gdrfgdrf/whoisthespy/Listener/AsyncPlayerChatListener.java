@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class AsyncPlayerChatListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public AsyncPlayerChatListener(WhoIsTheSpy whoIsTheSpy) {
@@ -24,31 +23,33 @@ public class AsyncPlayerChatListener implements Listener {
         Player player = event.getPlayer();
         PlayerInfo playerInfo = PlayerInfo.getFromPlayer(player);
 
-        if (playerInfo != null) {
-            if (playerInfo.isInGame()) {
-                Game game = playerInfo.getCurrentGame();
-
-                if (whoIsTheSpy.getGameChatFormat() != null) {
-                    String format = whoIsTheSpy.getGameChatFormat()
-                            .replace("%GAME%", game.getName())
-                            .replace("%PLAYER%", player.getDisplayName())
-                            .replace("%MESSAGE%", event.getMessage());
-
-                    event.setFormat(format);
-                }
-
-                event.getRecipients().clear();
-
-                for (PlayerInfo info : game.getPlayersInGame()) {
-                    event.getRecipients().add(info.getPlayer());
-                }
-            } else {
-                for (Player recipients : Bukkit.getOnlinePlayers()) {
-                    if (PlayerInfo.isInGame(recipients)) {
-                        event.getRecipients().remove(recipients);
-                    }
+        if (playerInfo == null) {
+            return;
+        }
+        if (!playerInfo.isInGame()) {
+            for (Player recipients : Bukkit.getOnlinePlayers()) {
+                if (PlayerInfo.isInGame(recipients)) {
+                    event.getRecipients().remove(recipients);
                 }
             }
+            return;
+        }
+
+        Game game = playerInfo.getCurrentGame();
+
+        if (whoIsTheSpy.getGameChatFormat() != null) {
+            String format = whoIsTheSpy.getGameChatFormat()
+                    .replace("%GAME%", game.getName())
+                    .replace("%PLAYER%", player.getDisplayName())
+                    .replace("%MESSAGE%", event.getMessage());
+
+            event.setFormat(format);
+        }
+
+        event.getRecipients().clear();
+
+        for (PlayerInfo info : game.getPlayersInGame()) {
+            event.getRecipients().add(info.getPlayer());
         }
     }
 

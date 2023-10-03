@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuitListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public PlayerQuitListener(WhoIsTheSpy whoIsTheSpy) {

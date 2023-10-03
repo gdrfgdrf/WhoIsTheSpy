@@ -4,9 +4,14 @@ import cn.gdrfgdrf.whoisthespy.Data.Config;
 import cn.gdrfgdrf.whoisthespy.Utils.de.pauhull.utils.scheduler.Scheduler;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -16,24 +21,19 @@ public class Plugin extends JavaPlugin {
     private Metrics metrics;
 
     private WhoIsTheSpy whoIsTheSpy;
-    private Config config;
-    private ExecutorService executorService;
-    private ScheduledExecutorService scheduledExecutorService;
 
     private void init() {
-
         metrics = new Metrics(this, 18580);
+        File configFile = new File(WhoIsTheSpy.PLUGIN_FOLDER + "config.yml");
 
         if (WhoIsTheSpy.DEBUG) {
-            new File(WhoIsTheSpy.PLUGIN_FOLDER + "config.yml").delete();
+            configFile.delete();
         }
 
         saveDefaultConfig();
 
-        config = new Config(new File(WhoIsTheSpy.PLUGIN_FOLDER + "config.yml"), true);
-        executorService = Scheduler.createExecutorService();
-        scheduledExecutorService = Scheduler.createScheduledExecutorService();
-        whoIsTheSpy = new WhoIsTheSpy(this, config, executorService, scheduledExecutorService);
+        Config config = new Config(configFile, true);
+        whoIsTheSpy = new WhoIsTheSpy(this, config);
     }
 
     @Override
@@ -50,7 +50,5 @@ public class Plugin extends JavaPlugin {
     @Override
     public void onDisable() {
         whoIsTheSpy.disable();
-        executorService.shutdown();
-        scheduledExecutorService.shutdown();
     }
 }

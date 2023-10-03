@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 public class PlayerDropItemListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public PlayerDropItemListener(WhoIsTheSpy whoIsTheSpy) {

@@ -12,7 +12,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class UndercoverGuessWordListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public UndercoverGuessWordListener(WhoIsTheSpy whoIsTheSpy) {
@@ -32,18 +31,31 @@ public class UndercoverGuessWordListener implements Listener {
             if (game.getUndercoverGuess() == null) {
                 game.setUndercoverGuess(word);
 
-                game.broadcast(WhoIsTheSpyLocale.PREFIX, WhoIsTheSpyLocale.UNDERCOVER_GUESS_WORD_MESSAGE, "%WORD%", word);
+                game.broadcast(
+                        WhoIsTheSpyLocale.PREFIX,
+                        WhoIsTheSpyLocale.UNDERCOVER_GUESS_WORD_MESSAGE,
+                        "%WORD%",
+                        word
+                );
 
                 if (word.equals(game.getWord())) {
-                    game.getPhaseHandler().getGamePhase().finishGameForUndercoverWin();
+                    game.getPhaseHandler()
+                            .getGamePhase()
+                            .finishGameForUndercoverWin();
                 } else {
-                    game.getPhaseHandler().getGamePhase().finishGameForUndercoverLose();
+                    game.getPhaseHandler()
+                            .getGamePhase()
+                            .finishGameForUndercoverLose();
                 }
             } else {
-                WhoIsTheSpyLocale.ALREADY_GUESS_WORD.message(WhoIsTheSpyLocale.PREFIX, player);
+                WhoIsTheSpyLocale.ALREADY_GUESS_WORD.message(
+                        WhoIsTheSpyLocale.PREFIX,
+                        player);
             }
         } else {
-            WhoIsTheSpyLocale.GUESS_WORD_TYPE_FULL.message(WhoIsTheSpyLocale.PREFIX, player);
+            WhoIsTheSpyLocale.GUESS_WORD_TYPE_FULL.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    player);
         }
     }
 

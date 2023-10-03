@@ -33,7 +33,6 @@ import java.util.*;
 import static cn.gdrfgdrf.whoisthespy.Locale.WhoIsTheSpyLocale.INVENTORY_TEXT_INPUT_GUESS_WORD_TITLE;
 
 public class Game {
-
     public static final int MIN_PLAYER = 3;
     public static final int MAX_PLAYER = 10;
     public static final int COUNTDOWN = 30;
@@ -173,8 +172,16 @@ public class Game {
                 .onClick((slot, stateSnapshot) -> {
                     if (slot == 2) {
                         if (this.gameState == GameState.STARTED) {
-                            UndercoverGuessWordEvent undercoverGuessWordEvent = new UndercoverGuessWordEvent(this, PlayerInfo.getFromPlayer(stateSnapshot.getPlayer()), stateSnapshot.getText());
-                            Bukkit.getPluginManager().callEvent(undercoverGuessWordEvent);
+                            PlayerInfo playerInfo = PlayerInfo.getFromPlayer(stateSnapshot.getPlayer());
+
+                            if (playerInfo != null) {
+                                UndercoverGuessWordEvent undercoverGuessWordEvent = new UndercoverGuessWordEvent(
+                                        this,
+                                        playerInfo,
+                                        stateSnapshot.getText()
+                                );
+                                Bukkit.getPluginManager().callEvent(undercoverGuessWordEvent);
+                            }
                         }
 
                         return Collections.singletonList(AnvilGUI.ResponseAction.close());
@@ -225,7 +232,12 @@ public class Game {
         return inventorySet;
     }
 
-    public static void addVoteItem(ChestGui VOTE, OutlinePane VOTE_OUTLINE_PANE, PaginatedPane VOTE_PAGINATED_PANE, StaticPane VOTE_NAVIGATION_STATIC_PANE) {
+    public static void addVoteItem(
+            ChestGui VOTE,
+            OutlinePane VOTE_OUTLINE_PANE,
+            PaginatedPane VOTE_PAGINATED_PANE,
+            StaticPane VOTE_NAVIGATION_STATIC_PANE
+    ) {
         VOTE_OUTLINE_PANE.addItem(new GuiItem(ItemType.NAVIGATION_BACKGROUND.getItemStack()));
         VOTE_OUTLINE_PANE.setRepeat(true);
         VOTE_OUTLINE_PANE.setPriority(Pane.Priority.LOWEST);
@@ -265,15 +277,14 @@ public class Game {
     }
 
     public static int startUpdatingSigns(int ticks) {
-        return Bukkit.getScheduler().scheduleSyncRepeatingTask(WhoIsTheSpy.getInstance().getPlugin(), () -> {
-            WhoIsTheSpy.getInstance().getGames().forEach(game -> {
-                try {
-                    game.updateSigns();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }, 0, ticks);
+        return Bukkit.getScheduler().scheduleSyncRepeatingTask(WhoIsTheSpy.getInstance().getPlugin(), () ->
+                WhoIsTheSpy.getInstance().getGames().forEach(game -> {
+                    try {
+                        game.updateSigns();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }), 0, ticks);
     }
 
     public static boolean isLoaded(String name) {
@@ -415,7 +426,11 @@ public class Game {
     }
 
     public void callPlayerLeaveGameEvent(PlayerInfo playerInfo) {
-        PlayerLeaveGameEvent event = new PlayerLeaveGameEvent(this, playerInfo.getPlayer(), playerInfo);
+        PlayerLeaveGameEvent event = new PlayerLeaveGameEvent(
+                this,
+                playerInfo.getPlayer(),
+                playerInfo
+        );
         Bukkit.getPluginManager().callEvent(event);
     }
 
@@ -532,8 +547,16 @@ public class Game {
                 .onClick((slot, stateSnapshot) -> {
                     if (slot == 2) {
                         if (this.gameState == GameState.STARTED) {
-                            UndercoverGuessWordEvent undercoverGuessWordEvent = new UndercoverGuessWordEvent(this, PlayerInfo.getFromPlayer(stateSnapshot.getPlayer()), stateSnapshot.getText());
-                            Bukkit.getPluginManager().callEvent(undercoverGuessWordEvent);
+                            PlayerInfo playerInfo = PlayerInfo.getFromPlayer(stateSnapshot.getPlayer());
+
+                            if (playerInfo != null) {
+                                UndercoverGuessWordEvent undercoverGuessWordEvent = new UndercoverGuessWordEvent(
+                                        this,
+                                        playerInfo,
+                                        stateSnapshot.getText()
+                                );
+                                Bukkit.getPluginManager().callEvent(undercoverGuessWordEvent);
+                            }
                         }
 
                         return Collections.singletonList(AnvilGUI.ResponseAction.close());

@@ -10,15 +10,18 @@ import java.io.File;
 import java.io.IOException;
 
 public class GameDataManager {
-
     private final Game game;
+
     @Getter
     private FileConfiguration fileConfiguration;
+
     @Setter
     @Getter
     private File file;
+
     @Setter
     private boolean isRename = false;
+
     @Setter
     private File beforeRenameFile;
 
@@ -66,8 +69,8 @@ public class GameDataManager {
         saveFileConfiguration();
     }
 
-    public boolean delete() {
-        return file.delete();
+    public void delete() {
+        file.delete();
     }
 
     public void loadData() {

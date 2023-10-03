@@ -14,7 +14,6 @@ import org.bukkit.event.Listener;
 import static cn.gdrfgdrf.whoisthespy.Locale.WhoIsTheSpyLocale.*;
 
 public class PlayerLeaveGameListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public PlayerLeaveGameListener(WhoIsTheSpy whoIsTheSpy) {
@@ -45,13 +44,29 @@ public class PlayerLeaveGameListener implements Listener {
         player.setExp(0);
         player.setLevel(0);
 
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(whoIsTheSpy.getPlugin(), () -> player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()), 20L);
+        if (Bukkit.getScoreboardManager() != null) {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(whoIsTheSpy.getPlugin(), () ->
+                    player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard()),
+                    20L
+            );
+        }
 
-        game.broadcast(PREFIX, PLAYER_LEAVED_GAME, "%PLAYER%", player.getDisplayName());
+        game.broadcast(
+                PREFIX,
+                PLAYER_LEAVED_GAME,
+                "%PLAYER%",
+                player.getDisplayName()
+        );
 
-        this.whoIsTheSpy.getDisplayScoreboard().setWaitingScoreboard(0, game);
+        this.whoIsTheSpy.getDisplayScoreboard()
+                .setWaitingScoreboard(0, game);
 
-        PLAYER_LEFT_GAME.message(PREFIX, player, "%GAME%", game.getName());
+        PLAYER_LEFT_GAME.message(
+                PREFIX,
+                player,
+                "%GAME%",
+                game.getName()
+        );
     }
 
 }

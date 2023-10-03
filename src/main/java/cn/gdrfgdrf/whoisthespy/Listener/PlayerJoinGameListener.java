@@ -15,7 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class PlayerJoinGameListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public PlayerJoinGameListener(WhoIsTheSpy whoIsTheSpy) {
@@ -31,28 +30,41 @@ public class PlayerJoinGameListener implements Listener {
         PlayerInfo playerInfo = event.getPlayerInfo();
 
         if (playerInfo.isInGame()) {
-            WhoIsTheSpyLocale.ERROR_ALREADY_JOINED_GAME.message(WhoIsTheSpyLocale.PREFIX, player);
+            WhoIsTheSpyLocale.ERROR_ALREADY_JOINED_GAME.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    player
+            );
             event.setCancelMessage(WhoIsTheSpyLocale.ERROR_ALREADY_JOINED_GAME.toString());
             event.setCancelled(true);
             return;
         }
 
         if (game.getPlayersInGame().size() >= game.getMaxPlayer()) {
-            WhoIsTheSpyLocale.ERROR_GAME_FULL.message(WhoIsTheSpyLocale.PREFIX, player);
+            WhoIsTheSpyLocale.ERROR_GAME_FULL.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    player
+            );
             event.setCancelMessage(WhoIsTheSpyLocale.ERROR_GAME_FULL.toString());
             event.setCancelled(true);
             return;
         }
 
-        if (game.getGameState() == GameState.STARTED || game.getGameState() == GameState.PREPARING) {
-            WhoIsTheSpyLocale.ERROR_GAME_STARTED.message(WhoIsTheSpyLocale.PREFIX, player);
+        if (game.getGameState() == GameState.STARTED ||
+                game.getGameState() == GameState.PREPARING) {
+            WhoIsTheSpyLocale.ERROR_GAME_STARTED.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    player
+            );
             event.setCancelMessage(WhoIsTheSpyLocale.ERROR_GAME_STARTED.toString());
             event.setCancelled(true);
             return;
         }
 
         if (!game.isEnabled()) {
-            WhoIsTheSpyLocale.ERROR_GAME_IS_DISABLED.message(WhoIsTheSpyLocale.PREFIX, player);
+            WhoIsTheSpyLocale.ERROR_GAME_IS_DISABLED.message(
+                    WhoIsTheSpyLocale.PREFIX,
+                    player
+            );
             event.setCancelMessage(WhoIsTheSpyLocale.ERROR_GAME_IS_DISABLED.toString());
             event.setCancelled(true);
             return;
@@ -61,7 +73,12 @@ public class PlayerJoinGameListener implements Listener {
         playerInfo.setPlayerState(PlayerState.INGAME);
         playerInfo.setCurrentGame(game);
         game.getPlayersInGame().add(playerInfo);
-        game.broadcast(WhoIsTheSpyLocale.PREFIX, WhoIsTheSpyLocale.PLAYER_JOINED_GAME, "%PLAYER%", player.getDisplayName());
+        game.broadcast(
+                WhoIsTheSpyLocale.PREFIX,
+                WhoIsTheSpyLocale.PLAYER_JOINED_GAME,
+                "%PLAYER%",
+                player.getDisplayName()
+        );
         game.getPhaseHandler().startWaitingPhase();
 
         PlayerData data = PlayerData.create(player);
@@ -73,7 +90,8 @@ public class PlayerJoinGameListener implements Listener {
             Util.initPlayerStatus(player, 8);
         }
 
-        this.whoIsTheSpy.getDisplayScoreboard().setWaitingScoreboard(0, game);
+        this.whoIsTheSpy.getDisplayScoreboard()
+                .setWaitingScoreboard(0, game);
     }
 
 }

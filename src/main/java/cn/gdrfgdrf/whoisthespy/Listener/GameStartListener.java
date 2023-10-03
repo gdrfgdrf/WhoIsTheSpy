@@ -26,7 +26,6 @@ import static cn.gdrfgdrf.whoisthespy.Locale.WhoIsTheSpyLocale.COUNTDOWN_ABORTED
 import static cn.gdrfgdrf.whoisthespy.Locale.WhoIsTheSpyLocale.PREFIX;
 
 public class GameStartListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public GameStartListener(WhoIsTheSpy whoIsTheSpy) {
@@ -66,15 +65,18 @@ public class GameStartListener implements Listener {
                 for (int i = 0; i < game.getPlayersInGame().size(); i++) {
                     PlayerInfo playerInfo = game.getPlayersInGame().get(i);
                     PlayerHead playerHead = new PlayerHead(playerInfo.getPlayer());
+
                     playerHeads.add(playerHead);
                     itemStackList.add(playerHead.getItemStack());
                 }
 
-                for (Map.Entry<PlayerInfo, InventorySet> map : game.getPlayerInfoAndVoteInventory().entrySet()) {
+                for (Map.Entry<PlayerInfo, InventorySet> map :
+                        game.getPlayerInfoAndVoteInventory().entrySet()) {
                     map.getValue().getPaginatedPane().populateWithItemStacks(itemStackList);
                 }
 
-                game.getQUESTIONER_SELECT_BE_QUESTIONED_PAGINATED_PANE().populateWithItemStacks(Util.PlayerHeadListToItemStackList(playerHeads));
+                game.getQUESTIONER_SELECT_BE_QUESTIONED_PAGINATED_PANE()
+                        .populateWithItemStacks(Util.PlayerHeadListToItemStackList(playerHeads));
 
                 new BukkitRunnable() {
                     @Override
@@ -95,11 +97,13 @@ public class GameStartListener implements Listener {
 
                             List<ItemStack> list = Util.PlayerHeadListToItemStackList(playerHeads);
 
-                            for (Map.Entry<PlayerInfo, InventorySet> map : game.getPlayerInfoAndVoteInventory().entrySet()) {
+                            for (Map.Entry<PlayerInfo, InventorySet> map :
+                                    game.getPlayerInfoAndVoteInventory().entrySet()) {
                                 map.getValue().getPaginatedPane().populateWithItemStacks(list);
                             }
 
-                            game.getQUESTIONER_SELECT_BE_QUESTIONED_PAGINATED_PANE().populateWithItemStacks(Util.PlayerHeadListToItemStackList(playerHeads));
+                            game.getQUESTIONER_SELECT_BE_QUESTIONED_PAGINATED_PANE()
+                                    .populateWithItemStacks(Util.PlayerHeadListToItemStackList(playerHeads));
                         }
                     }
                 }.runTaskAsynchronously(whoIsTheSpy.getPlugin());
@@ -109,111 +113,141 @@ public class GameStartListener implements Listener {
                 if (game.getPlayersInGame().size() < game.getMinPlayer()) {
                     setGameState(game);
                     resetPlayerInfoAndVoteInventoryMap(game);
-                } else {
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            if (game.getPlayersInGame().size() < game.getMinPlayer()) {
-                                setGameState(game);
-                                resetPlayerInfoAndVoteInventoryMap(game);
-                            } else {
-                                game.broadcast(WhoIsTheSpyLocale.PREFIX, WhoIsTheSpyLocale.GET_RANDOM_CHARACTER);
+                    return;
+                }
 
-                                game.setUndercover(undercover);
-                                String word = getWord();
-                                game.setWord(word);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (game.getPlayersInGame().size() < game.getMinPlayer()) {
+                            setGameState(game);
+                            resetPlayerInfoAndVoteInventoryMap(game);
+                            return;
+                        }
 
-                                for (PlayerInfo playerInfo : game.getPlayersInGame()) {
-                                    if (playerInfo != undercover) {
-                                        game.getGood().add(playerInfo);
-                                    }
-                                }
+                        game.broadcast(WhoIsTheSpyLocale.PREFIX, WhoIsTheSpyLocale.GET_RANDOM_CHARACTER);
 
+                        game.setUndercover(undercover);
+                        String word = getWord();
+                        game.setWord(word);
+
+                        for (PlayerInfo playerInfo : game.getPlayersInGame()) {
+                            if (playerInfo != undercover) {
+                                game.getGood().add(playerInfo);
+                            }
+                        }
+
+                        if (game.getPlayersInGame().size() < game.getMinPlayer()) {
+                            setGameState(game);
+                            resetPlayerInfoAndVoteInventoryMap(game);
+                            game.getGood().clear();
+                            game.setUndercover(null);
+                            game.setWord(null);
+
+                            return;
+                        }
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
                                 if (game.getPlayersInGame().size() < game.getMinPlayer()) {
                                     setGameState(game);
                                     resetPlayerInfoAndVoteInventoryMap(game);
                                     game.getGood().clear();
                                     game.setUndercover(null);
                                     game.setWord(null);
-                                } else {
-                                    new BukkitRunnable() {
-                                        @Override
-                                        public void run() {
-                                            if (game.getPlayersInGame().size() < game.getMinPlayer()) {
-                                                setGameState(game);
-                                                resetPlayerInfoAndVoteInventoryMap(game);
-                                                game.getGood().clear();
-                                                game.setUndercover(null);
-                                                game.setWord(null);
-                                            } else {
-                                                Util.sendTitle(undercover.getPlayer(), WhoIsTheSpyLocale.CHARACTER_TITLE.toString(), WhoIsTheSpyLocale.UNDERCOVER.toString());
-                                                Util.sendTitleForPlayerInfoList(game.getGood(), WhoIsTheSpyLocale.CHARACTER_TITLE.toString(), WhoIsTheSpyLocale.GOOD.toString());
+
+                                    return;
+                                }
+
+                                Util.sendTitle(
+                                        undercover.getPlayer(),
+                                        WhoIsTheSpyLocale.CHARACTER_TITLE.toString(),
+                                        WhoIsTheSpyLocale.UNDERCOVER.toString()
+                                );
+                                Util.sendTitleForPlayerInfoList(
+                                        game.getGood(),
+                                        WhoIsTheSpyLocale.CHARACTER_TITLE.toString(),
+                                        WhoIsTheSpyLocale.GOOD.toString()
+                                );
+
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        if (game.getPlayersInGame().size() < game.getMinPlayer()) {
+                                            setGameState(game);
+                                            resetPlayerInfoAndVoteInventoryMap(game);
+                                            game.getGood().clear();
+                                            game.setUndercover(null);
+                                            game.setWord(null);
+
+                                            return;
+                                        }
+
+                                        Util.sendTitleForPlayerInfoList(
+                                                game.getGood(),
+                                                WhoIsTheSpyLocale.WORD_TITLE.toString(),
+                                                WhoIsTheSpyLocale.WORD.toString() + word
+                                        );
+
+                                        new BukkitRunnable() {
+                                            @Override
+                                            public void run() {
+                                                PlayerInfo questioner = getQuestioner(game);
+                                                game.setQuestioner(questioner);
+
+                                                if (game.getPlayersInGame().size() < game.getMinPlayer()) {
+                                                    setGameState(game);
+                                                    resetPlayerInfoAndVoteInventoryMap(game);
+                                                    game.getGood().clear();
+                                                    game.setUndercover(null);
+                                                    game.setWord(null);
+                                                    game.setQuestioner(null);
+
+                                                    return;
+                                                }
+
+                                                Util.sendTitleForPlayerInfoList(
+                                                        game.getPlayersInGame(),
+                                                        WhoIsTheSpyLocale.QUESTIONER_TITLE.toString(),
+                                                        questioner.getPlayer().getPlayerListName()
+                                                );
+
+                                                for (PlayerInfo playerInfo : game.getGood()) {
+                                                    if (whoIsTheSpy.getConfig().getConfiguration().isInt("ItemSlot.INIT_VOTE")) {
+                                                        playerInfo.getPlayer().getInventory().setItem(
+                                                                whoIsTheSpy.getConfig().getConfiguration().getInt("ItemSlot.INIT_VOTE"), ItemType.INIT_VOTE.getItemStack()
+                                                        );
+                                                    } else {
+                                                        playerInfo.getPlayer().getInventory().setItem(8, ItemType.INIT_VOTE.getItemStack());
+                                                    }
+                                                }
+
+                                                if (whoIsTheSpy.getConfig().getConfiguration().isInt("ItemSlot.INIT_GUESS_WORD")) {
+                                                    game.getUndercover().getPlayer().getInventory().setItem(
+                                                            whoIsTheSpy.getConfig().getConfiguration().getInt("ItemSlot.INIT_GUESS_WORD"), ItemType.INIT_GUESS_WORD.getItemStack()
+                                                    );
+                                                } else {
+                                                    game.getUndercover().getPlayer().getInventory().setItem(8, ItemType.INIT_GUESS_WORD.getItemStack());
+                                                }
 
                                                 new BukkitRunnable() {
                                                     @Override
                                                     public void run() {
-                                                        if (game.getPlayersInGame().size() < game.getMinPlayer()) {
-                                                            setGameState(game);
-                                                            resetPlayerInfoAndVoteInventoryMap(game);
-                                                            game.getGood().clear();
-                                                            game.setUndercover(null);
-                                                            game.setWord(null);
-                                                        } else {
-                                                            Util.sendTitleForPlayerInfoList(game.getGood(), WhoIsTheSpyLocale.WORD_TITLE.toString(), WhoIsTheSpyLocale.WORD.toString() + word);
-
-                                                            new BukkitRunnable() {
-                                                                @Override
-                                                                public void run() {
-                                                                    PlayerInfo questioner = getQuestioner(game);
-                                                                    game.setQuestioner(questioner);
-
-                                                                    if (game.getPlayersInGame().size() < game.getMinPlayer()) {
-                                                                        setGameState(game);
-                                                                        resetPlayerInfoAndVoteInventoryMap(game);
-                                                                        game.getGood().clear();
-                                                                        game.setUndercover(null);
-                                                                        game.setWord(null);
-                                                                        game.setQuestioner(null);
-                                                                    } else {
-                                                                        Util.sendTitleForPlayerInfoList(game.getPlayersInGame(), WhoIsTheSpyLocale.QUESTIONER_TITLE.toString(), questioner.getPlayer().getPlayerListName());
-
-                                                                        for (PlayerInfo playerInfo : game.getGood()) {
-                                                                            if (whoIsTheSpy.getConfig().getConfiguration().isInt("ItemSlot.INIT_VOTE")) {
-                                                                                playerInfo.getPlayer().getInventory().setItem(whoIsTheSpy.getConfig().getConfiguration().getInt("ItemSlot.INIT_VOTE"), ItemType.INIT_VOTE.getItemStack());
-                                                                            } else {
-                                                                                playerInfo.getPlayer().getInventory().setItem(8, ItemType.INIT_VOTE.getItemStack());
-                                                                            }
-                                                                        }
-
-                                                                        if (whoIsTheSpy.getConfig().getConfiguration().isInt("ItemSlot.INIT_GUESS_WORD")) {
-                                                                            game.getUndercover().getPlayer().getInventory().setItem(whoIsTheSpy.getConfig().getConfiguration().getInt("ItemSlot.INIT_GUESS_WORD"), ItemType.INIT_GUESS_WORD.getItemStack());
-                                                                        } else {
-                                                                            game.getUndercover().getPlayer().getInventory().setItem(8, ItemType.INIT_GUESS_WORD.getItemStack());
-                                                                        }
-
-                                                                        new BukkitRunnable() {
-                                                                            @Override
-                                                                            public void run() {
-                                                                                game.getQUESTIONER_SELECT_BE_QUESTIONED().show(questioner.getPlayer());
-                                                                            }
-                                                                        }.runTask(whoIsTheSpy.getPlugin());
-
-                                                                        game.getPhaseHandler().startGamePhase();
-                                                                        game.setGameState(GameState.STARTED);
-                                                                    }
-                                                                }
-                                                            }.runTaskLaterAsynchronously(whoIsTheSpy.getPlugin(), 40);
-                                                        }
+                                                        game.getQUESTIONER_SELECT_BE_QUESTIONED().show(questioner.getPlayer());
                                                     }
-                                                }.runTaskLaterAsynchronously(whoIsTheSpy.getPlugin(), 40);
+                                                }.runTask(whoIsTheSpy.getPlugin());
+
+                                                game.getPhaseHandler().startGamePhase();
+                                                game.setGameState(GameState.STARTED);
                                             }
-                                        }
-                                    }.runTaskLaterAsynchronously(whoIsTheSpy.getPlugin(), 20);
-                                }
+                                        }.runTaskLaterAsynchronously(whoIsTheSpy.getPlugin(), 40);
+                                    }
+                                }.runTaskLaterAsynchronously(whoIsTheSpy.getPlugin(), 40);
                             }
-                        }
-                    }.runTaskLaterAsynchronously(whoIsTheSpy.getPlugin(), 20);
-                }
+                        }.runTaskLaterAsynchronously(whoIsTheSpy.getPlugin(), 20);
+                    }
+                }.runTaskLaterAsynchronously(whoIsTheSpy.getPlugin(), 20);
             }
         } else {
             game.getPhaseHandler().getGamePhase().finishGameForNotFoundWord();
@@ -238,7 +272,9 @@ public class GameStartListener implements Listener {
         game.setGameState(GameState.WAITING);
 
         if (whoIsTheSpy.getConfig().getConfiguration().isInt("ItemSlot.LEAVE_GAME")) {
-            Util.initPlayerStatus(game.getPlayersInGame(), whoIsTheSpy.getConfig().getConfiguration().getInt("ItemSlot.LEAVE_GAME"));
+            Util.initPlayerStatus(
+                    game.getPlayersInGame(), whoIsTheSpy.getConfig().getConfiguration().getInt("ItemSlot.LEAVE_GAME")
+            );
         } else {
             Util.initPlayerStatus(game.getPlayersInGame(), 8);
         }

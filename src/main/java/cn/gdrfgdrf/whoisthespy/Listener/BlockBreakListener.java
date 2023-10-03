@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.Iterator;
 
 public class BlockBreakListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public BlockBreakListener(WhoIsTheSpy whoIsTheSpy) {
@@ -30,30 +29,42 @@ public class BlockBreakListener implements Listener {
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
-        if (block.getType().name().contains("SIGN")) {
-            for (Game game : whoIsTheSpy.getGames()) {
-                Iterator<Location> iterator = game.getSigns().iterator();
+        if (!block.getType().name().contains("SIGN")) {
+            return;
+        }
 
-                while (iterator.hasNext()) {
-                    Location location = iterator.next();
+        for (Game game : whoIsTheSpy.getGames()) {
+            Iterator<Location> iterator = game.getSigns().iterator();
 
-                    if (block.getLocation().equals(location)) {
-                        if (!player.hasPermission(WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX + "removeSign")) {
-                            event.setCancelled(true);
-                            return;
-                        }
+            while (iterator.hasNext()) {
+                Location location = iterator.next();
 
-                        iterator.remove();
-
-                        try {
-                            game.saveData();
-                            WhoIsTheSpyLocale.SUCCESS_REMOVE_SIGN.message(WhoIsTheSpyLocale.PREFIX, player, "%GAME%", game.getName());
-                        } catch (IOException e) {
-                            WhoIsTheSpyLocale.ERROR_REMOVE_SIGN.message(WhoIsTheSpyLocale.PREFIX, player);
-                        }
-
+                if (block.getLocation().equals(location)) {
+                    if (!player.hasPermission(
+                            WhoIsTheSpyCommand.PERMISSION_ADMINISTRATOR_PREFIX + "removeSign"
+                    )) {
+                        event.setCancelled(true);
                         return;
                     }
+
+                    iterator.remove();
+
+                    try {
+                        game.saveData();
+                        WhoIsTheSpyLocale.SUCCESS_REMOVE_SIGN.message(
+                                WhoIsTheSpyLocale.PREFIX,
+                                player,
+                                "%GAME%",
+                                game.getName()
+                        );
+                    } catch (IOException e) {
+                        WhoIsTheSpyLocale.ERROR_REMOVE_SIGN.message(
+                                WhoIsTheSpyLocale.PREFIX,
+                                player
+                        );
+                    }
+
+                    return;
                 }
             }
         }

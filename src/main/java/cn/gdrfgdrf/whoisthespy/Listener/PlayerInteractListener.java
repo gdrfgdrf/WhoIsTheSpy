@@ -19,7 +19,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class PlayerInteractListener implements Listener {
-
     private final WhoIsTheSpy whoIsTheSpy;
 
     public PlayerInteractListener(WhoIsTheSpy whoIsTheSpy) {
@@ -46,10 +45,15 @@ public class PlayerInteractListener implements Listener {
             for (Game game : whoIsTheSpy.getGames()) {
                 for (Location location : game.getSigns().getLocations()) {
                     if (block.getLocation().equals(location)) {
-                        if (player.hasPermission(WhoIsTheSpyCommand.PERMISSION_USER_PREFIX + "join")) {
+                        if (player.hasPermission(
+                                WhoIsTheSpyCommand.PERMISSION_USER_PREFIX + "join"
+                        )) {
                             game.addPlayer(player);
                         } else {
-                            WhoIsTheSpyLocale.ERROR_NO_PERMISSIONS.message(WhoIsTheSpyLocale.PREFIX, player);
+                            WhoIsTheSpyLocale.ERROR_NO_PERMISSIONS.message(
+                                    WhoIsTheSpyLocale.PREFIX,
+                                    player
+                            );
                         }
 
                         return;
@@ -65,7 +69,10 @@ public class PlayerInteractListener implements Listener {
         if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
             if (itemStack.equals(ItemType.LEAVE_GAME.getItemStack())) {
                 if (playerInfo == null || !playerInfo.isInGame()) {
-                    WhoIsTheSpyLocale.ERROR_NOT_IN_GAME.message(WhoIsTheSpyLocale.PREFIX, player);
+                    WhoIsTheSpyLocale.ERROR_NOT_IN_GAME.message(
+                            WhoIsTheSpyLocale.PREFIX,
+                            player
+                    );
                     return;
                 }
 
@@ -79,7 +86,10 @@ public class PlayerInteractListener implements Listener {
 
             if (itemStack.equals(ItemType.END_ANSWER.getItemStack())) {
                 if (playerInfo == null || !playerInfo.isInGame()) {
-                    WhoIsTheSpyLocale.ERROR_NOT_IN_GAME.message(WhoIsTheSpyLocale.PREFIX, player);
+                    WhoIsTheSpyLocale.ERROR_NOT_IN_GAME.message(
+                            WhoIsTheSpyLocale.PREFIX,
+                            player
+                    );
                     return;
                 }
 
@@ -88,11 +98,23 @@ public class PlayerInteractListener implements Listener {
                 if (playerInfo == game.getBeQuestioned()) {
                     game.setQuestioner(playerInfo);
                     game.setBeQuestioned(null);
-                    game.getPhaseHandler().getGamePhase().setSelectBeQuestionedCountdown(game.getSelectBeQuestionedDuration());
+                    game.getPhaseHandler()
+                            .getGamePhase()
+                            .setSelectBeQuestionedCountdown(
+                                    game.getSelectBeQuestionedDuration()
+                            );
 
-                    Util.clearItemStack(player, ItemType.END_ANSWER.getItemStack());
+                    Util.clearItemStack(
+                            player,
+                            ItemType.END_ANSWER.getItemStack()
+                    );
 
-                    game.broadcast(WhoIsTheSpyLocale.PREFIX, WhoIsTheSpyLocale.PLAYER_END_ANSWER, "%PLAYER%", player.getDisplayName());
+                    game.broadcast(
+                            WhoIsTheSpyLocale.PREFIX,
+                            WhoIsTheSpyLocale.PLAYER_END_ANSWER,
+                            "%PLAYER%",
+                            player.getDisplayName()
+                    );
 
                     game.getQUESTIONER_SELECT_BE_QUESTIONED().show(player);
                 }
@@ -100,49 +122,74 @@ public class PlayerInteractListener implements Listener {
 
             if (itemStack.equals(ItemType.INIT_VOTE.getItemStack())) {
                 if (playerInfo == null || !playerInfo.isInGame()) {
-                    WhoIsTheSpyLocale.ERROR_NOT_IN_GAME.message(WhoIsTheSpyLocale.PREFIX, player);
+                    WhoIsTheSpyLocale.ERROR_NOT_IN_GAME.message(
+                            WhoIsTheSpyLocale.PREFIX,
+                            player
+                    );
                     return;
                 }
 
                 Game game = playerInfo.getCurrentGame();
 
                 if (game.getGood().contains(playerInfo)) {
-                    ChestGui voteGui = game.getPlayerInfoAndVoteInventory().get(playerInfo).getChestGui();
+                    ChestGui voteGui = game.getPlayerInfoAndVoteInventory()
+                            .get(playerInfo)
+                            .getChestGui();
 
                     if (game.getAbstainVotePlayer().contains(playerInfo)) {
-                        WhoIsTheSpyLocale.VOTE_ABSTAIN.message(WhoIsTheSpyLocale.PREFIX, player);
-
+                        WhoIsTheSpyLocale.VOTE_ABSTAIN.message(
+                                WhoIsTheSpyLocale.PREFIX,
+                                player
+                        );
                         return;
                     }
 
                     if (game.getVotedPlayers().contains(playerInfo)) {
-                        WhoIsTheSpyLocale.ALREADY_VOTED.message(WhoIsTheSpyLocale.PREFIX, player);
-
+                        WhoIsTheSpyLocale.ALREADY_VOTED.message(
+                                WhoIsTheSpyLocale.PREFIX,
+                                player
+                        );
                         return;
                     }
 
                     if (game.getInitVotePlayers().contains(playerInfo)) {
-                        WhoIsTheSpyLocale.ALREADY_INIT_VOTE.message(WhoIsTheSpyLocale.PREFIX, player);
-
+                        WhoIsTheSpyLocale.ALREADY_INIT_VOTE.message(
+                                WhoIsTheSpyLocale.PREFIX,
+                                player
+                        );
                         voteGui.show(player);
                         return;
                     }
 
                     game.getInitVotePlayers().add(playerInfo);
 
-                    Util.sendTitleForPlayerInfoList(game.getPlayersInGame(), WhoIsTheSpyLocale.PLAYER_INIT_VOTE_TITLE.toString(), WhoIsTheSpyLocale.PLAYER_INIT_VOTE_SUBTITLE.toString()
-                            .replace("%PLAYER%", player.getDisplayName()));
-                    game.broadcast(WhoIsTheSpyLocale.PREFIX, WhoIsTheSpyLocale.PLAYER_INIT_VOTE, "%PLAYER%", player.getDisplayName());
+                    Util.sendTitleForPlayerInfoList(
+                            game.getPlayersInGame(),
+                            WhoIsTheSpyLocale.PLAYER_INIT_VOTE_TITLE.toString(),
+                            WhoIsTheSpyLocale.PLAYER_INIT_VOTE_SUBTITLE.toString()
+                                    .replace("%PLAYER%", player.getDisplayName()));
+                    game.broadcast(
+                            WhoIsTheSpyLocale.PREFIX,
+                            WhoIsTheSpyLocale.PLAYER_INIT_VOTE,
+                            "%PLAYER%",
+                            player.getDisplayName()
+                    );
 
                     voteGui.show(player);
                 } else {
-                    WhoIsTheSpyLocale.NOT_GOOD.message(WhoIsTheSpyLocale.PREFIX, player);
+                    WhoIsTheSpyLocale.NOT_GOOD.message(
+                            WhoIsTheSpyLocale.PREFIX,
+                            player
+                    );
                 }
             }
 
             if (itemStack.equals(ItemType.INIT_GUESS_WORD.getItemStack())) {
                 if (playerInfo == null || !playerInfo.isInGame()) {
-                    WhoIsTheSpyLocale.ERROR_NOT_IN_GAME.message(WhoIsTheSpyLocale.PREFIX, player);
+                    WhoIsTheSpyLocale.ERROR_NOT_IN_GAME.message(
+                            WhoIsTheSpyLocale.PREFIX,
+                            player
+                    );
                     return;
                 }
 
@@ -152,10 +199,16 @@ public class PlayerInteractListener implements Listener {
                     if (game.getUndercoverGuess() == null) {
                         game.getGUESS_WORD_GUI().open(player);
                     } else {
-                        WhoIsTheSpyLocale.ALREADY_GUESS_WORD.message(WhoIsTheSpyLocale.PREFIX, player);
+                        WhoIsTheSpyLocale.ALREADY_GUESS_WORD.message(
+                                WhoIsTheSpyLocale.PREFIX,
+                                player
+                        );
                     }
                 } else {
-                    WhoIsTheSpyLocale.NOT_UNDERCOVER.message(WhoIsTheSpyLocale.PREFIX, player);
+                    WhoIsTheSpyLocale.NOT_UNDERCOVER.message(
+                            WhoIsTheSpyLocale.PREFIX,
+                            player
+                    );
                 }
             }
         }

@@ -11,12 +11,15 @@ public class GameDataSet {
     @Setter
     @Getter
     SignList signs;
+
     @Setter
     @Getter
     private String name;
+
     @Setter
     @Getter
     private int minPlayer, maxPlayer, countdown, gameDuration, selectBeQuestionedDuration, answerDuration, voteDuration;
+
     @Setter
     @Getter
     private boolean enabled;
@@ -47,7 +50,12 @@ public class GameDataSet {
         }
     }
 
-    public Object load(FileConfiguration fileConfiguration, String path, Class<?> type, Game game) {
+    public Object load(
+            FileConfiguration fileConfiguration,
+            String path,
+            Class<?> type,
+            Game game
+    ) {
         if (!fileConfiguration.isSet(path)) {
             for (Field field : GameDataSet.class.getDeclaredFields()) {
                 if (field.getName().equalsIgnoreCase(path)) {
@@ -69,7 +77,11 @@ public class GameDataSet {
         return fileConfiguration.get(path);
     }
 
-    public void set(FileConfiguration configuration, String path, Object object) {
+    public void set(
+            FileConfiguration configuration,
+            String path,
+            Object object
+    ) {
         if (object instanceof SignList) {
             SignList signList = (SignList) object;
             configuration.set(path, signList.toStringList());
